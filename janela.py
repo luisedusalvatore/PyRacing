@@ -13,6 +13,9 @@ def start(window):
             if event.type == pygame.QUIT:
                 state = QUIT
                 running = False
+            if event.type == pygame.KEYUP:
+                state = GAME
+                running = False
         window.fill(BLACK)
 
         # Depois de desenhar tudo, inverte o display.
