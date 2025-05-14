@@ -3,6 +3,7 @@ import random
 from configuracoes import *
 from funcoes import *
 from janela import *
+from game_screen import *
 
 pygame.init()
 pygame.mixer.init()
@@ -16,7 +17,7 @@ while state != QUIT:
     if state == INIT:
         state = janela(window)
     elif state == GAME:
-        state = janela(window)
+        state = game_screen(window)
     else:
         state =janela(window)
 
