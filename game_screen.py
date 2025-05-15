@@ -27,5 +27,6 @@ def game_screen(window):
         window.fill(BLACK)  # Preenche com a cor branca
         window.blit(groups['background'], (0, 0))
         # atualiza a tela
+        all_sprites.draw(window)
         all_sprites.update()
         pygame.display.update()
