@@ -3,6 +3,8 @@ from configuracoes import *
 import os
 from classes import *
 from assets import load_assets
+from funcoes import *
+
 def game_screen(window):
     assets = load_assets()
     # Relógio do sistema
@@ -17,6 +19,7 @@ def game_screen(window):
     #Criando o jogador
     player = Piloto (groups, assets)
     all_sprites.add(player)
+
 
     game = True
     while game:
