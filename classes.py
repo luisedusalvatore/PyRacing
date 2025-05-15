@@ -32,7 +32,7 @@ class Carro(pygame.sprite.Sprite):
         self.image = assets['inimigo']
         self.rect = self.image.get_rect()
         self.rect.x = random.randint(0, WIDTH-WIDTH_CAR)
-        self.rect.y = random.randint(-100, int(HEIGHT/2))
+        self.rect.y = int(HEIGHT/2)
         self.speedy = random.randint(2, 9)
         self.speedx = 0
 
@@ -46,6 +46,6 @@ class Carro(pygame.sprite.Sprite):
             self.image = assets['inimigo']
             self.rect = self.image.get_rect()
             self.rect.x = random.randint(0, WIDTH-WIDTH_CAR)
-            self.rect.y = random.randint(-100, int(HEIGHT/2))
+            self.rect.y = int(HEIGHT/2)
             self.speedy = random.randint(2, 9)
             self.speedx = 0
