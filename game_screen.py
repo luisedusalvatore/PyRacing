@@ -18,12 +18,24 @@ def game_screen(window):
     player = Piloto (groups, assets)
     all_sprites.add(player)
 
-    state = True
-    while state != False:
+    game = True
+    while game:
         clock.tick(FPS)
         for event in pygame.event.get():
+
             if event.type == pygame.QUIT:
-                state = False
+                game = False
+            # Aperta a tecla
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LEFT or  event.key == pygame.K_a:
+                    player.speedx -= 12
+                if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                    player.speedx += 12
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_LEFT or  event.key == pygame.K_a:
+                    player.speedx += 12
+                if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                    player.speedx -= 12
         window.fill(BLACK)  # Preenche com a cor branca
         window.blit(groups['background'], (0, 0))
         # atualiza a tela
