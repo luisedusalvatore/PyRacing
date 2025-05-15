@@ -40,7 +40,7 @@ class Carro(pygame.sprite.Sprite):
         # Atualizando a posição do meteoro
         self.rect.x += self.speedx
         self.rect.y += self.speedy
-        # Se o meteoro passar do final da tela, volta para cima e sorteia
+        # Se o carro passar do final da tela, volta para cima e sorteia
         # novas posições e velocidades
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
             self.image = assets['inimigo']
