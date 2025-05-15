@@ -13,6 +13,7 @@ def game_screen(window):
     all_sprites = pygame.sprite.Group()
     enemies = pygame.sprite.Group()
     groups = {}
+    groups['enemies'] = enemies
     groups['all_sprites'] = all_sprites
     groups['background'] = background
 
@@ -20,7 +21,11 @@ def game_screen(window):
     player = Piloto (groups, assets)
     all_sprites.add(player)
 
+    # Criando os carros:
 
+    for i in range(3):
+        inimigo = Carro(assets)
+        all_sprites.add(inimigo)
     game = True
     while game:
         clock.tick(FPS)
