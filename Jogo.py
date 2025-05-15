@@ -9,7 +9,7 @@ pygame.init()
 pygame.mixer.init()
 
 # ----- Gera tela principal
-window = pygame.display.set_mode((WIDTH, HEIGHT))
+window = pygame.display.set_mode((WIDTH, HEIGHT),pygame.FULLSCREEN)
 pygame.display.set_caption('PyRacing')
 
 state = INIT
@@ -19,7 +19,7 @@ while state != QUIT:
     elif state == GAME:
         state = game_screen(window)
     else:
-        state =janela(window)
+        state = game_over(window)
 
 # ===== Finalização =====
 pygame.quit()  # Função do PyGame que finaliza os recursos utilizados
