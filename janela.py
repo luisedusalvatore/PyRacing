@@ -21,7 +21,7 @@ def start(window):
         # Depois de desenhar tudo, inverte o display.
         pygame.display.flip
 
-    return state
+    return GAME
 def game_over(window):
     # ----- Gera tela principal
     window = pygame.display.set_mode((WIDTH,HEIGHT))
