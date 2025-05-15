@@ -9,7 +9,7 @@ pygame.init()
 pygame.mixer.init()
 
 # ----- Gera tela principal
-window = pygame.display.set_mode((WIDTH, HEIGHT),pygame.FULLSCREEN)
+window = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption('PyRacing')
 
 state = INIT
