@@ -15,7 +15,7 @@ pygame.display.set_caption('PyRacing')
 state = INIT
 while state != QUIT:
     if state == INIT:
-        state = janela(window)
+        state = start(window)
     elif state == GAME:
         state = game_screen(window)
     else:
