@@ -3,7 +3,7 @@ from configuracoes import *
 clock = pygame.time.Clock()
 def start(window):
     # ----- Gera tela principal
-    window = pygame.display.set_mode((WIDTH,HEIGHT))
+    window = pygame.display.set_mode((WIDTH,HEIGHT),pygame.FULLSCREEN)
     pygame.display.set_caption('Py Racing')
     pygame.display.update()
     running = True
@@ -24,7 +24,7 @@ def start(window):
     return GAME
 def game_over(window):
     # ----- Gera tela principal
-    window = pygame.display.set_mode((WIDTH,HEIGHT))
+    window = pygame.display.set_mode((WIDTH,HEIGHT), pygame.FULLSCREEN)
     pygame.display.set_caption('Py Racing')
     pygame.display.update()
     running = True
