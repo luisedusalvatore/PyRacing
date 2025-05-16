@@ -89,3 +89,49 @@ class Carro(pygame.sprite.Sprite):
             self.fim_x = random.randint(40, WIDTH - WIDTH_CAR - 40)  # Fixed typo: fim_x_x
             self.fim_y = HEIGHT
             self.mask = pygame.mask.from_surface(self.image)
+
+class Explosion (pygame.sprite.Sprite):
+    # Construtor da classe.
+    def __init__ (self,center, assets):
+        # Criador do Sprite
+        pygame.sprite.Sprite.__init__(self)
+        # Animação da explosao guardada
+        self.explosao = assets[explosao]
+
+        # Inicia a animação, colocando posicionando a explosao no display.
+        self.frame = 0 # Armazena o índica atual
+        self.image = self.explosao[self.frame] # Primeira imagem da explosao
+        self.rect =self.image.get_rect() 
+        self.center = center # Centraliza a imagem no centro do sprite
+
+        # Contar o tempo do programa
+        self.last_update = pygame.time.get_ticks()
+        # Controle de ticks de animação: troca de imagem a cada self.frame_ticks milissegundos.
+        # Quando pygame.time.get_ticks() - self.last_update > self.frame_ticks a
+        # próxima imagem da animação será mostrada
+        self.frame_ticks = 50
+    def update(self):
+        # Verificação da contagem atual
+        # tempo que a função está rodando
+        now = pygame.time.get_ticks()
+        # Verifica quantos ticks se passaram desde a ultima mudança de frame.
+        elapsed_ticks = now - self.last_update
+
+        # Se já está na hora de mudar de imagem...
+        if elapsed_ticks > self.frame_ticks:
+            # Marca o tick da nova imagem.
+            self.last_update = now
+
+            # Avança um quadro.
+            self.frame += 1
+
+            # Verifica se já chegou no final da animação.
+            if self.frame == len(self.explosao):
+                # Se sim, tchau explosão!
+                self.kill()
+            else:
+                # Se ainda não chegou ao fim da explosão, troca de imagem.
+                center = self.rect.center
+                self.image = self.explosao[self.frame]
+                self.rect = self.image.get_rect()
+                self.rect.center = center

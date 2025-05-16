@@ -15,5 +15,5 @@ def load_assets():
         img = pygame.image.load(filename).convert_alpha()
         img = pygame.transform.scale(img, (32, 32))
         explosion_anim.append(img)
-        assets[explosao] = explosion_anim
+        assets[explosao] = explosion_anim 
     return assets
