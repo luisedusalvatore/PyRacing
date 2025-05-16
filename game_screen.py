@@ -23,7 +23,7 @@ def game_screen(window):
 
     # Criando os carros:
 
-    for i in range(3):
+    for i in range(2):
         inimigo = Carro(assets)
         all_sprites.add(inimigo)
     game = True
