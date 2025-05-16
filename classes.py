@@ -29,23 +29,63 @@ class Carro(pygame.sprite.Sprite):
     def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = assets['inimigo']
+        self.assets = assets
+        self.original_image = assets['inimigo']
+        self.base_width = WIDTH_CAR
+        self.base_height = HEIGHT_CAR
+        self.escala_min = 0.001
+        self.escala_max = 1.0
+        self.inicio_y = (HEIGHT) / 2
+        self.fim_y = HEIGHT
+        self.inicio_x = (WIDTH) / 2
+        self.fim_x = random.randint(40, WIDTH - WIDTH_CAR - 40)
+
+        # Initialize image and rect with minimum scale
+        new_width = int(self.base_width * self.escala_min)
+        new_height = int(self.base_height * self.escala_min)
+        self.image = pygame.transform.scale(self.original_image, (new_width, new_height))
         self.rect = self.image.get_rect()
-        self.rect.x = random.randint(0, WIDTH-WIDTH_CAR)
-        self.rect.y = int(HEIGHT/2)
-        self.speedy = random.randint(2, 9)
-        self.speedx = 0
+        self.rect.centerx = self.inicio_x
+        self.rect.y = self.inicio_y
+
+        self.speedy = random.randint(2, 3)
+        self.speedx = random.randint(-1, 1)
+        self.mask = pygame.mask.from_surface(self.image)
 
     def update(self):
-        # Atualizando a posição do meteoro
         self.rect.x += self.speedx
         self.rect.y += self.speedy
-        # Se o carro passar do final da tela, volta para cima e sorteia
-        # novas posições e velocidades
+
+        # Interpolate x-position
+        if self.inicio_y <= self.rect.y <= self.fim_y + 15:
+            proporcao = (self.rect.y - self.inicio_y) / (self.fim_y - self.inicio_y)
+            self.rect.centerx = self.inicio_x + (self.fim_x - self.inicio_x) * proporcao
+            scale = self.escala_min + (self.escala_max - self.escala_min) * proporcao
+        else:
+            scale = self.escala_min
+
+        # Apply scaling
+        new_width = int(self.base_width * scale)
+        new_height = int(self.base_height * scale)
+        self.image = pygame.transform.scale(self.original_image, (new_width, new_height))
+        self.mask = pygame.mask.from_surface(self.image)
+
+        # Update rect, keeping center
+        center = self.rect.center
+        self.rect = self.image.get_rect()
+        self.rect.center = center
+
+        # Reset if off-screen
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
-            self.image = assets['inimigo']
+            new_width = int(self.base_width * self.escala_min)
+            new_height = int(self.base_height * self.escala_min)
+            self.image = pygame.transform.scale(self.original_image, (new_width, new_height))
             self.rect = self.image.get_rect()
-            self.rect.x = random.randint(0, WIDTH-WIDTH_CAR)
-            self.rect.y = int(HEIGHT/2)
-            self.speedy = random.randint(2, 9)
-            self.speedx = 0
+            self.rect.centerx = self.inicio_x
+            self.rect.y = self.inicio_y
+            self.rect.x = self.inicio_x
+            self.speedy = random.randint(2, 3)
+            self.speedx = random.randint(-1, 1)
+            self.fim_x = random.randint(40, WIDTH - WIDTH_CAR - 40)  # Fixed typo: fim_x_x
+            self.fim_y = HEIGHT
+            self.mask = pygame.mask.from_surface(self.image)
