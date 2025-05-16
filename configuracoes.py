@@ -10,6 +10,8 @@ HEIGHT = 720 # Altura da tela
 FPS = 60 # Frames por segundo
 WIDTH_CAR = 200
 HEIGHT_CAR = 200
+WIDTH_PILOT = 150
+HEIGHT_PILOT = 150
 
 
 # Cores porque sim

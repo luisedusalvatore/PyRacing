@@ -11,7 +11,7 @@ class Piloto(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.centerx = WIDTH / 2
-        self.rect.bottom = HEIGHT - 10
+        self.rect.bottom = HEIGHT - 5
         self.speedx = 0
         self.groups = groups
         self.asstes = assets
@@ -31,10 +31,10 @@ class Carro(pygame.sprite.Sprite):
 
         self.assets = assets
         self.original_image = assets['inimigo']
-        self.base_width = WIDTH_CAR
-        self.base_height = HEIGHT_CAR
-        self.escala_min = 0.001
-        self.escala_max = 1.0
+        self.base_width = WIDTH_PILOT
+        self.base_height = HEIGHT_PILOT
+        self.escala_min = 0.0001
+        self.escala_max = 1
         self.inicio_y = (HEIGHT) / 2
         self.fim_y = HEIGHT
         self.inicio_x = (WIDTH) / 2
