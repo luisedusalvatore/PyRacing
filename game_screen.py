@@ -33,6 +33,7 @@ def game_screen(window):
 
             if event.type == pygame.QUIT:
                 game = False
+                state =  QUIT
             # Aperta a tecla
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT or  event.key == pygame.K_a:
