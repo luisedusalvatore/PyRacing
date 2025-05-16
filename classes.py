@@ -102,7 +102,7 @@ class Explosion (pygame.sprite.Sprite):
         self.frame = 0 # Armazena o índica atual
         self.image = self.explosao[self.frame] # Primeira imagem da explosao
         self.rect =self.image.get_rect() 
-        self.center = center # Centraliza a imagem no centro do sprite
+        self.rect.center = center # Centraliza a imagem no centro do sprite
 
         # Contar o tempo do programa
         self.last_update = pygame.time.get_ticks()
