@@ -17,17 +17,27 @@ def game_screen(window):
     groups['all_sprites'] = all_sprites
     groups['background'] = background
 
+
     #Criando o jogador
     player = Piloto (groups, assets)
     all_sprites.add(player)
 
     # Criando os carros:
 
-    for i in range(2):
+    for i in range(3):
         inimigo = Carro(assets)
         all_sprites.add(inimigo)
-    game = True
-    while game:
+
+    DONE = 0
+    PLAYING = 1
+    EXPLODING = 2
+    state = PLAYING
+
+    keysdown = {}
+    score = 0
+    lives = 4
+
+    while state != DONE:
         clock.tick(FPS)
         for event in pygame.event.get():
 
@@ -45,6 +55,12 @@ def game_screen(window):
                     player.speedx += 12
                 if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                     player.speedx -= 12
+        
+
+        hits = pygame.sprite.spritecollide(player, enemies, False, pygame.sprite.collide_mask)
+        if len(hits)>0:
+            player.kill()
+        
         window.fill(BLACK)  # Preenche com a cor branca
         window.blit(groups['background'], (0, 0))
         # atualiza a tela
