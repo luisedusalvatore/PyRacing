@@ -49,7 +49,7 @@ def game_screen(window):
     explosion_duration = 850
     last_vida_spawn = pygame.time.get_ticks()
     vida_spawn_interval = random.randint(10000, 30000)  # 10-30 seconds
-    faixa_spawn_interval = 6000  # Reverted to 6 seconds to avoid clutter
+    faixa_spawn_interval = 250  # Reverted to 6 seconds to avoid clutter
     last_faixa_spawn = pygame.time.get_ticks()
 
     while state != DONE:
