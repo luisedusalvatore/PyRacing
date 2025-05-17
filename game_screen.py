@@ -79,5 +79,8 @@ def game_screen(window):
         window.fill(BLACK)
         window.blit(groups['background'], (0, 0))
         all_sprites.draw(window)
+        for i in range(lives):
+            window.blit(assets[vida], (10 + i * 60, 10)) 
         all_sprites.update()
         pygame.display.update()
+
