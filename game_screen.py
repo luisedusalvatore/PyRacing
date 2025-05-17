@@ -49,9 +49,8 @@ def game_screen(window):
     explosion_duration = 850
     last_vida_spawn = pygame.time.get_ticks()
     vida_spawn_interval = random.randint(10000, 30000)  # 10-30 seconds
-    faixa_spawn_interval = 250  # Every 6 seconds
+    faixa_spawn_interval = 6000  # Reverted to 6 seconds to avoid clutter
     last_faixa_spawn = pygame.time.get_ticks()
-
 
     while state != DONE:
         clock.tick(FPS)
@@ -114,12 +113,11 @@ def game_screen(window):
             if now - explosion_tick > explosion_duration:
                 return DONE
 
-
         window.fill(BLACK)
         window.blit(groups['background'], (0, 0))
-        all_sprites.draw(window)  # Draw all sprites, including Esquerda/Direita
-        # Draw player last to appear in front
-        window.blit(player.image, player.rect)
+        all_sprites.draw(window)
+        if state == PLAYING:
+            window.blit(player.image, player.rect)
 
         for i in range(lives):
             window.blit(assets[vida2], (10 + i * 60, 10))
