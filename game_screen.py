@@ -13,11 +13,13 @@ def game_screen(window):
     all_sprites = pygame.sprite.Group()
     all_enemies = pygame.sprite.Group()
     all_vidas = pygame.sprite.Group()
+    all_faixas = pygame.sprite.Group()
 
     groups = {}
     groups['all_enemies'] = all_enemies
     groups['all_sprites'] = all_sprites
     groups['all_vidas'] = all_vidas
+    groups["all_faixas"] = all_faixas
     groups['background'] = background
 
     player = Piloto(groups, assets)
@@ -27,6 +29,9 @@ def game_screen(window):
         inimigo = Carro(assets)
         all_sprites.add(inimigo)
         all_enemies.add(inimigo)
+    
+    left = Esquerda(assets)
+    right = Direita(assets)
 
 
     DONE = 0
@@ -63,6 +68,11 @@ def game_screen(window):
         if state == PLAYING:
             now = pygame.time.get_ticks()
             # Spawn vida periodically
+            if now % 100 == 0:
+                left = Esquerda(assets)
+                right = Direita(assets)
+                all_sprites.add(left)
+                all_sprites.add(right)
             if now - last_vida_spawn > vida_spawn_interval:
                 vida = Vida(assets)
                 all_sprites.add(vida)
@@ -95,7 +105,7 @@ def game_screen(window):
         elif state == EXPLODING:
             now = pygame.time.get_ticks()
             if now - explosion_tick > explosion_duration:
-                return game_over(window)
+                return DONE
 
         window.fill(BLACK)
         window.blit(groups['background'], (0, 0))
@@ -104,5 +114,4 @@ def game_screen(window):
         for i in range(lives):
             window.blit(assets[vida2], (10 + i * 60, 10))
         all_sprites.update()
-        pygame.display.update()
         pygame.display.update()
