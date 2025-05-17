@@ -29,9 +29,12 @@ def game_screen(window):
         inimigo = Carro(assets)
         all_sprites.add(inimigo)
         all_enemies.add(inimigo)
-    
+
+    # Initial track sprites
     left = Esquerda(assets)
     right = Direita(assets)
+    all_sprites.add(left, right)
+    all_faixas.add(left, right)
 
     DONE = 0
     PLAYING = 1
@@ -46,10 +49,9 @@ def game_screen(window):
     explosion_duration = 850
     last_vida_spawn = pygame.time.get_ticks()
     vida_spawn_interval = random.randint(10000, 30000)  # 10-30 seconds
-    faixa_spawn_interval = 250
+    faixa_spawn_interval = 250  # Every 6 seconds
     last_faixa_spawn = pygame.time.get_ticks()
 
-    linhas_pista = [i * (HEIGHT // 10) for i in range(10)]
 
     while state != DONE:
         clock.tick(FPS)
@@ -115,11 +117,12 @@ def game_screen(window):
 
         window.fill(BLACK)
         window.blit(groups['background'], (0, 0))
-        all_sprites.draw(window)
+        all_sprites.draw(window)  # Draw all sprites, including Esquerda/Direita
+        # Draw player last to appear in front
+        window.blit(player.image, player.rect)
 
         for i in range(lives):
             window.blit(assets[vida2], (10 + i * 60, 10))
-        
         all_sprites.update()
         pygame.display.update()
 
