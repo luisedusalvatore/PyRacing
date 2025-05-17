@@ -33,7 +33,6 @@ def game_screen(window):
     left = Esquerda(assets)
     right = Direita(assets)
 
-
     DONE = 0
     PLAYING = 1
     EXPLODING = 2
@@ -47,6 +46,10 @@ def game_screen(window):
     explosion_duration = 850
     last_vida_spawn = pygame.time.get_ticks()
     vida_spawn_interval = random.randint(10000, 30000)  # 10-30 seconds
+    faixa_spawn_interval = 250
+    last_faixa_spawn = pygame.time.get_ticks()
+
+    linhas_pista = [i * (HEIGHT // 10) for i in range(10)]
 
     while state != DONE:
         clock.tick(FPS)
@@ -67,12 +70,14 @@ def game_screen(window):
 
         if state == PLAYING:
             now = pygame.time.get_ticks()
-            # Spawn vida periodically
-            if now % 100 == 0:
+            # Spawn faixas periodically
+            if now - last_faixa_spawn > faixa_spawn_interval:
                 left = Esquerda(assets)
                 right = Direita(assets)
-                all_sprites.add(left)
-                all_sprites.add(right)
+                all_sprites.add(left, right)
+                all_faixas.add(left, right)
+                last_faixa_spawn = now
+            # Spawn vida periodically
             if now - last_vida_spawn > vida_spawn_interval:
                 vida = Vida(assets)
                 all_sprites.add(vida)
@@ -107,6 +112,7 @@ def game_screen(window):
             if now - explosion_tick > explosion_duration:
                 return DONE
 
+
         window.fill(BLACK)
         window.blit(groups['background'], (0, 0))
         all_sprites.draw(window)
@@ -115,3 +121,5 @@ def game_screen(window):
             window.blit(assets[vida2], (10 + i * 60, 10))
         all_sprites.update()
         pygame.display.update()
+
+    return DONE
