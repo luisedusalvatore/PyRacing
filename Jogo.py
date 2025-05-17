@@ -1,7 +1,7 @@
 import pygame
 import random
 from configuracoes import *
-from funcoes import * 
+from funcoes import *
 from janela import *
 from game_screen import *
 
