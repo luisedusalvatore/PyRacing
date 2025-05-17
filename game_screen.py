@@ -33,6 +33,8 @@ def game_screen(window):
     keysdown = {}
     score = 0
     lives = 4
+    explosion_tick = 0
+    explosion_duration = 850  # 50ms * 9 frames + 400ms buffer
 
     while state != DONE:
         clock.tick(FPS)
@@ -52,27 +54,26 @@ def game_screen(window):
                         player.speedx -= 12
 
         if state == PLAYING:
-            hits = pygame.sprite.spritecollide(player, all_enemies, False, pygame.sprite.collide_mask)  # Changed to False to keep enemies
-            if hits:
-                lives -= 1
-                explosao = Explosion(player.rect.center, assets)
+            hits = pygame.sprite.spritecollide(player, all_enemies, True, pygame.sprite.collide_mask)
+            for hit in hits:
+                explosao = Explosion(hit.rect.center, assets)
                 all_sprites.add(explosao)
-                player.kill()
-                state = EXPLODING
-                keysdown = {}
-                explosion_tick = pygame.time.get_ticks()
-                explosion_duration = explosao.frame_ticks * len(explosao.explosao) + 400
+                lives -= 1
+                new_inimigo = Carro(assets)
+                all_sprites.add(new_inimigo)
+                all_enemies.add(new_inimigo)
+                if lives == 0:
+                    explosao = Explosion(player.rect.center, assets)
+                    all_sprites.add(explosao)
+                    player.kill()
+                    state = EXPLODING
+                    explosion_tick = pygame.time.get_ticks()
 
         elif state == EXPLODING:
             now = pygame.time.get_ticks()
             if now - explosion_tick > explosion_duration:
-                if lives == 0:
-                    state = DONE
-                else:
-                    state = PLAYING
-                    player = Piloto(groups, assets)  # Complete respawn
-                    all_sprites.add(player)
-                    player.speedx = 0  # Reset speed to ensure control
+                state = DONE
+
 
 
         window.fill(BLACK)
