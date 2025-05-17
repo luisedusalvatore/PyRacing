@@ -1,6 +1,7 @@
 import pygame
 from configuracoes import *
 import os
+import random
 from classes import *
 from assets import load_assets
 from funcoes import *
@@ -11,9 +12,12 @@ def game_screen(window):
     background = assets[fundo]
     all_sprites = pygame.sprite.Group()
     all_enemies = pygame.sprite.Group()
+    all_vidas = pygame.sprite.Group()
+
     groups = {}
     groups['all_enemies'] = all_enemies
     groups['all_sprites'] = all_sprites
+    groups['all_vidas'] = all_vidas
     groups['background'] = background
 
     player = Piloto(groups, assets)
@@ -21,7 +25,7 @@ def game_screen(window):
 
     for i in range(3):
         inimigo = Carro(assets)
-        all_sprites.add(inimigo)  # Add individual enemy to all_sprites
+        all_sprites.add(inimigo)
         all_enemies.add(inimigo)
 
 
@@ -33,8 +37,11 @@ def game_screen(window):
     keysdown = {}
     score = 0
     lives = 4
+    max_lives = 8
     explosion_tick = 0
-    explosion_duration = 850  # 50ms * 9 frames + 400ms buffer
+    explosion_duration = 850
+    last_vida_spawn = pygame.time.get_ticks()
+    vida_spawn_interval = random.randint(10000, 30000)  # 10-30 seconds
 
     while state != DONE:
         clock.tick(FPS)
@@ -54,8 +61,19 @@ def game_screen(window):
                         player.speedx -= 12
 
         if state == PLAYING:
+            now = pygame.time.get_ticks()
+            # Spawn vida periodically
+            if now - last_vida_spawn > vida_spawn_interval:
+                vida = Vida(assets)
+                all_sprites.add(vida)
+                all_vidas.add(vida)
+                last_vida_spawn = now
+                vida_spawn_interval = random.randint(10000, 30000)
+
+            # Enemy collisions
             hits = pygame.sprite.spritecollide(player, all_enemies, True, pygame.sprite.collide_mask)
             for hit in hits:
+                print("Collision with enemy at:", hit.rect.center)
                 explosao = Explosion(hit.rect.center, assets)
                 all_sprites.add(explosao)
                 lives -= 1
@@ -69,18 +87,22 @@ def game_screen(window):
                     state = EXPLODING
                     explosion_tick = pygame.time.get_ticks()
 
+            vida_hits = pygame.sprite.spritecollide(player, all_vidas, True, pygame.sprite.collide_mask)
+            for vida in vida_hits:
+                if lives < max_lives:
+                    lives += 1
+
         elif state == EXPLODING:
             now = pygame.time.get_ticks()
             if now - explosion_tick > explosion_duration:
-                state = DONE
-
-
+                return game_over(window)
 
         window.fill(BLACK)
         window.blit(groups['background'], (0, 0))
         all_sprites.draw(window)
+
         for i in range(lives):
-            window.blit(assets[vida], (10 + i * 60, 10)) 
+            window.blit(assets[vida2], (10 + i * 60, 10))
         all_sprites.update()
         pygame.display.update()
-
+        pygame.display.update()
