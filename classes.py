@@ -79,18 +79,7 @@ class Carro(pygame.sprite.Sprite):
 
         # Reset if off-screen
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
-            new_width = int(self.base_width * self.escala_min)
-            new_height = int(self.base_height * self.escala_min)
-            self.image = pygame.transform.scale(self.original_image, (new_width, new_height))
-            self.rect = self.image.get_rect()
-            self.rect.centerx = self.inicio_x
-            self.rect.y = self.inicio_y
-            self.rect.x = self.inicio_x
-            self.speedy = random.randint(2, 3)
-            self.speedx = random.randint(-1, 1)
-            self.fim_x = random.randint(40, WIDTH - WIDTH_CAR - 40)
-            self.fim_y = HEIGHT
-            self.mask = pygame.mask.from_surface(self.image)
+            self.kill()
 
 class Explosion(pygame.sprite.Sprite):
     def __init__(self, center, assets):

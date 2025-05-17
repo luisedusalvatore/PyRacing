@@ -25,11 +25,6 @@ def game_screen(window):
     player = Piloto(groups, assets)
     all_sprites.add(player)
 
-    for i in range(3):
-        inimigo = Carro(assets)
-        all_sprites.add(inimigo)
-        all_enemies.add(inimigo)
-
     # Initial track sprites
     left = Esquerda(assets)
     right = Direita(assets)
@@ -51,7 +46,8 @@ def game_screen(window):
     vida_spawn_interval = random.randint(10000, 30000)  # 10-30 seconds
     faixa_spawn_interval = 250  # Reverted to 6 seconds to avoid clutter
     last_faixa_spawn = pygame.time.get_ticks()
-
+    last_enemy_spawn = pygame.time.get_ticks()
+    enemy_spawn_interval = random.randint(1000,4000)
     while state != DONE:
         clock.tick(FPS)
         for event in pygame.event.get():
@@ -85,7 +81,12 @@ def game_screen(window):
                 all_vidas.add(vida)
                 last_vida_spawn = now
                 vida_spawn_interval = random.randint(10000, 30000)
-
+            if now - last_enemy_spawn >enemy_spawn_interval:
+                enemy = Carro(assets)
+                all_sprites.add(enemy)
+                all_enemies.add(enemy)
+                last_enemy_spawn = now
+                enemy_spawn_interval = random.randint(1000,2000)
             # Enemy collisions
             hits = pygame.sprite.spritecollide(player, all_enemies, True, pygame.sprite.collide_mask)
             for hit in hits:
@@ -93,9 +94,6 @@ def game_screen(window):
                 explosao = Explosion(hit.rect.center, assets)
                 all_sprites.add(explosao)
                 lives -= 1
-                new_inimigo = Carro(assets)
-                all_sprites.add(new_inimigo)
-                all_enemies.add(new_inimigo)
                 if lives == 0:
                     explosao = Explosion(player.rect.center, assets)
                     all_sprites.add(explosao)
