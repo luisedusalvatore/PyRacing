@@ -323,3 +323,101 @@ class Oleo(pygame.sprite.Sprite):
             self.fim_x = random.randint(40, WIDTH - WIDTH_CAR - 40)
             self.fim_y = HEIGHT
             self.mask = pygame.mask.from_surface(self.image)
+
+class ArvoreE(pygame.sprite.Sprite):
+    def __init__(self, assets):
+        pygame.sprite.Sprite.__init__(self)
+
+        self.assets = assets
+        self.original_image = assets[arvore]
+        self.base_width = WIDTH_FAIXA
+        self.base_height = HEIGHT_FAIXA
+        self.escala_min = 0.2
+        self.escala_max = 1.0
+        self.inicio_y = HEIGHT / 2
+        self.fim_y = HEIGHT
+        self.inicio_x = WIDTH / 2
+        self.fim_x = 0
+
+        new_width = int(self.base_width * self.escala_min)
+        new_height = int(self.base_height * self.escala_min)
+        self.image = pygame.transform.scale(self.original_image, (new_width, new_height))
+        self.rect = self.image.get_rect()
+        self.rect.centerx = self.inicio_x
+        self.rect.y = self.inicio_y
+
+        self.speedy = 10
+        self.speedx = 0
+        self.mask = pygame.mask.from_surface(self.image)
+
+    def update(self):
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+
+        if self.inicio_y <= self.rect.y <= self.fim_y + 15:
+            proporcao = (self.rect.y - self.inicio_y) / (self.fim_y - self.inicio_y)
+            self.rect.centerx = self.inicio_x + (self.fim_x - self.inicio_x) * proporcao
+            scale = self.escala_min + (self.escala_max - self.escala_min) * proporcao
+        else:
+            scale = self.escala_min
+
+        new_width = int(self.base_width * scale)
+        new_height = int(self.base_height * scale)
+        self.image = pygame.transform.scale(self.original_image, (new_width, new_height))
+        self.mask = pygame.mask.from_surface(self.image)
+
+        center = self.rect.center
+        self.rect = self.image.get_rect()
+        self.rect.center = center
+
+        if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
+            self.kill()
+
+class ArvoreD(pygame.sprite.Sprite):
+    def __init__(self, assets):
+        pygame.sprite.Sprite.__init__(self)
+
+        self.assets = assets
+        self.original_image = assets[arvore]
+        self.base_width = WIDTH_FAIXA
+        self.base_height = HEIGHT_FAIXA
+        self.escala_min = 0.2
+        self.escala_max = 1.0
+        self.inicio_y = HEIGHT / 2
+        self.fim_y = HEIGHT
+        self.inicio_x = WIDTH / 2
+        self.fim_x = WIDTH
+
+        new_width = int(self.base_width * self.escala_min)
+        new_height = int(self.base_height * self.escala_min)
+        self.image = pygame.transform.scale(self.original_image, (new_width, new_height))
+        self.rect = self.image.get_rect()
+        self.rect.centerx = self.inicio_x
+        self.rect.y = self.inicio_y
+
+        self.speedy = 10
+        self.speedx = 0
+        self.mask = pygame.mask.from_surface(self.image)
+
+    def update(self):
+        self.rect.x += self.speedx
+        self.rect.y += self.speedy
+
+        if self.inicio_y <= self.rect.y <= self.fim_y + 15:
+            proporcao = (self.rect.y - self.inicio_y) / (self.fim_y - self.inicio_y)
+            self.rect.centerx = self.inicio_x + (self.fim_x - self.inicio_x) * proporcao
+            scale = self.escala_min + (self.escala_max - self.escala_min) * proporcao
+        else:
+            scale = self.escala_min
+
+        new_width = int(self.base_width * scale)
+        new_height = int(self.base_height * scale)
+        self.image = pygame.transform.scale(self.original_image, (new_width, new_height))
+        self.mask = pygame.mask.from_surface(self.image)
+
+        center = self.rect.center
+        self.rect = self.image.get_rect()
+        self.rect.center = center
+
+        if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
+            self.kill()

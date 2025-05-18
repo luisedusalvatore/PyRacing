@@ -51,6 +51,10 @@ def game_screen(window):
     enemy_spawn_interval = random.randint(1000,4000)
     oleo_spawn = pygame.time.get_ticks()
     oleo_spawn_interval = random.randint(1000, 10000)
+    arvoree_spawn_interval = random.randint(5000,10000)
+    arvoree_spawn = pygame.time.get_ticks()
+    arvored_spawn_interval = random.randint(5000,10000)
+    arvored_spawn = pygame.time.get_ticks()
     tempo_sem_c = 5000
     controle = True
     while state != DONE:
@@ -111,6 +115,17 @@ def game_screen(window):
                 all_oil.add(oil)
                 oleo_spawn = now
                 oleo_spawn_interval = random.randint(1000, 10000)
+            
+            if now - arvoree_spawn > arvoree_spawn_interval:
+                arvoree = ArvoreE(assets)
+                all_sprites.add(arvoree)
+                arvoree_spawn = now
+                arvoree_spawn_interval = random.randint(5000,10000)
+            if now - arvored_spawn > arvored_spawn_interval:
+                arvored = ArvoreD(assets)
+                all_sprites.add(arvored)
+                arvored_spawn = now
+                arvored_spawn_interval = random.randint(5000,10000)
             hits = pygame.sprite.spritecollide(player, all_enemies, True, pygame.sprite.collide_mask)
             for hit in hits:
             
