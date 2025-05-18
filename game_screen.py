@@ -14,6 +14,7 @@ def game_screen(window):
     all_enemies = pygame.sprite.Group()
     all_vidas = pygame.sprite.Group()
     all_faixas = pygame.sprite.Group()
+    all_oil = pygame.sprite.Group()
 
     groups = {}
     groups['all_enemies'] = all_enemies
@@ -48,22 +49,38 @@ def game_screen(window):
     last_faixa_spawn = pygame.time.get_ticks()
     last_enemy_spawn = pygame.time.get_ticks()
     enemy_spawn_interval = random.randint(1000,4000)
+    oleo_spawn = pygame.time.get_ticks()
+    oleo_spawn_interval = random.randint(1000, 10000)
+    tempo_sem_c = 5000
+    controle = True
     while state != DONE:
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 state = DONE
             if state == PLAYING:
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                        player.speedx -= 12
-                    if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                        player.speedx += 12
-                if event.type == pygame.KEYUP:
-                    if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                        player.speedx += 12
-                    if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                        player.speedx -= 12
+                if controle == True:
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                            player.speedx -= 12
+                        if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                            player.speedx += 12
+                    if event.type == pygame.KEYUP:
+                        if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                            player.speedx += 12
+                        if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                            player.speedx -= 12
+                else:
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                            player.speedx += 12
+                        if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                            player.speedx -= 12
+                    if event.type == pygame.KEYUP:
+                        if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                            player.speedx -= 12
+                        if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                            player.speedx += 12
 
         if state == PLAYING:
             now = pygame.time.get_ticks()
@@ -88,9 +105,15 @@ def game_screen(window):
                 last_enemy_spawn = now
                 enemy_spawn_interval = random.randint(1000,2000)
             # Enemy collisions
+            if now - oleo_spawn > oleo_spawn_interval:
+                oil = Oleo(assets)
+                all_sprites.add(oil)
+                all_oil.add(oil)
+                oleo_spawn = now
+                oleo_spawn_interval = random.randint(1000, 10000)
             hits = pygame.sprite.spritecollide(player, all_enemies, True, pygame.sprite.collide_mask)
             for hit in hits:
-                print("Collision with enemy at:", hit.rect.center)
+            
                 explosao = Explosion(hit.rect.center, assets)
                 all_sprites.add(explosao)
                 lives -= 1
@@ -105,7 +128,13 @@ def game_screen(window):
             for vida in vida_hits:
                 if lives < max_lives:
                     lives += 1
-
+            
+            oil_hits = pygame.sprite.spritecollide(player, all_oil, True, pygame.sprite.collide_mask)
+            for oil in oil_hits:
+                controle = False
+                s_controle = pygame.time.get_ticks()
+            if not controle and now - s_controle > tempo_sem_c:
+                controle = True
         elif state == EXPLODING:
             now = pygame.time.get_ticks()
             if now - explosion_tick > explosion_duration:

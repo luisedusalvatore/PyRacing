@@ -269,7 +269,7 @@ class Oleo(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         self.assets = assets
-        self.original_image = assets[vida]
+        self.original_image = assets[oleo]
         self.base_width = WIDTH_OLEO
         self.base_height = HEIGHT_OLEO
         self.escala_min = 0.0001
