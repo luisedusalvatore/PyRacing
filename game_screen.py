@@ -67,9 +67,9 @@ def game_screen(window):
                             player.speedx += 12
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                            player.speedx += 12
+                            player.speedx = 0
                         if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                            player.speedx -= 12
+                            player.speedx = 0
                 else:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_LEFT or event.key == pygame.K_a:
@@ -78,9 +78,9 @@ def game_screen(window):
                             player.speedx -= 12
                     if event.type == pygame.KEYUP:
                         if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                            player.speedx -= 12
+                            player.speedx = 0
                         if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                            player.speedx += 12
+                            player.speedx = 0
 
         if state == PLAYING:
             now = pygame.time.get_ticks()
