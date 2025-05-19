@@ -10,8 +10,10 @@ esquerda = 'esquerda'
 direita = 'direita'
 oleo = 'oleo'
 arvore = 'arvore'
+estrada = 'estrada'
 def load_assets():
     assets = {}
+    assets[estrada] = pygame.transform.scale(pygame.image.load('files/img/estrada.png').convert(),(WIDTH - 80,HEIGHT/2))
     assets[fundo] = pygame.transform.scale(pygame.image.load('files/img/main_field.png').convert(),(WIDTH,HEIGHT))
     assets[home] = pygame.transform.scale(pygame.image.load('files/img/home.png').convert(),(WIDTH,HEIGHT))
     assets['Carro_Piloto'] = pygame.transform.scale( pygame.image.load('files/img/piloto.png').convert_alpha(), (WIDTH_PILOT,HEIGHT_PILOT))

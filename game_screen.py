@@ -9,7 +9,8 @@ from funcoes import *
 def game_screen(window):
     assets = load_assets()
     clock = pygame.time.Clock()
-    background = assets[fundo]
+    pista = assets[estrada]
+   # window.blit(pista, (30,HEIGHT/2))
     all_sprites = pygame.sprite.Group()
     all_enemies = pygame.sprite.Group()
     all_vidas = pygame.sprite.Group()
@@ -21,7 +22,7 @@ def game_screen(window):
     groups['all_sprites'] = all_sprites
     groups['all_vidas'] = all_vidas
     groups["all_faixas"] = all_faixas
-    groups['background'] = background
+    groups['background'] = pista
 
     player = Piloto(groups, assets)
     all_sprites.add(player)
@@ -159,8 +160,8 @@ def game_screen(window):
         window.blit(groups['background'], (0, 0))
         all_sprites.draw(window)
         if state == PLAYING:
+            window.blit(pista, (30,HEIGHT/2))
             window.blit(player.image, player.rect)
-
         for i in range(lives):
             window.blit(assets[vida2], (10 + i * 60, 10))
         all_sprites.update()
