@@ -421,3 +421,20 @@ class ArvoreD(pygame.sprite.Sprite):
 
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
             self.kill()
+class Nuvem(pygame.sprite.Sprite):
+    def __init__(self, assets):
+        pygame.sprite.Sprite.__init__(self)
+        n = random.randint(0, 2)
+        self.assets = assets
+        self.original_image = assets[nuvem][n]
+        self.image = self.original_image  # Initialize image
+        self.rect = self.image.get_rect()
+        self.rect.x = -WIDTH_NUVEM  # Start off-screen left
+        self.rect.y = random.randint(50, HEIGHT/2 - HEIGHT_NUVEM)  # 50 to 260
+        self.speedx = random.randint(1, 5)
+        self.mask = pygame.mask.from_surface(self.image)
+
+    def update(self):
+        self.rect.x += self.speedx
+        if self.rect.left > WIDTH:  # Kill when fully off-screen right
+            self.kill()

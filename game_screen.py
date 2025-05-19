@@ -57,6 +57,8 @@ def game_screen(window):
     arvoree_spawn = pygame.time.get_ticks()
     arvored_spawn_interval = random.randint(5000,10000)
     arvored_spawn = pygame.time.get_ticks()
+    nuvem_spawn_interval = random.randint(5000,30000)
+    nuvem_spawn = pygame.time.get_ticks()
     tempo_sem_c = 2500
     controle = True
     while state != DONE:
@@ -128,6 +130,11 @@ def game_screen(window):
                 all_sprites.add(arvored)
                 arvored_spawn = now
                 arvored_spawn_interval = random.randint(5000,10000)
+            if now - nuvem_spawn > nuvem_spawn_interval:
+                nuvem = Nuvem(assets)
+                all_sprites.add(nuvem)
+                nuvem_spawn = now
+                nuvem_spawn_interval = random.randint(5000,30000)
             hits = pygame.sprite.spritecollide(player, all_enemies, True, pygame.sprite.collide_mask)
             for hit in hits:
             

@@ -13,6 +13,7 @@ arvore = 'arvore'
 estrada = 'estrada'
 grama = 'grama'
 ceu = 'ceu'
+nuvem = 'nuvem'
 def load_assets():
     assets = {}
     assets[estrada] = pygame.transform.scale(pygame.image.load('files/img/estrada.png').convert_alpha(),(WIDTH - 300,HEIGHT/2))
@@ -29,8 +30,13 @@ def load_assets():
     assets[arvore] = [
         pygame.transform.scale(pygame.image.load('files/img/arvore.png').convert_alpha(),(WIDTH_ARVORE, HEIGHT_ARVORE)),
         pygame.transform.scale(pygame.image.load('files/img/arvore2.png').convert_alpha(),(WIDTH_ARVORE, HEIGHT_ARVORE)),
-        pygame.transform.scale(pygame.image.load('files/img/arvore3.png').convert_alpha(),(WIDTH_ARVORE, HEIGHT_ARVORE)),
+        pygame.transform.scale(pygame.image.load('files/img/arvore3.png').convert_alpha(),(WIDTH_ARVORE, HEIGHT_ARVORE))
         ]
+    assets[nuvem] = [
+        pygame.transform.scale(pygame.image.load('files/img/Nuvem1.png').convert_alpha(),(WIDTH_ARVORE, HEIGHT_ARVORE)),
+        pygame.transform.scale(pygame.image.load('files/img/Nuvem2.png').convert_alpha(),(WIDTH_ARVORE, HEIGHT_ARVORE)),
+        pygame.transform.scale(pygame.image.load('files/img/Nuvem3.png').convert_alpha(),(WIDTH_ARVORE, HEIGHT_ARVORE))
+    ]
     assets[oleo] = pygame.transform.scale(pygame.image.load('files/img/oleo.png').convert_alpha(),(WIDTH_OLEO, HEIGHT_OLEO))
     explosion_anim = []
     for i in range(9):
