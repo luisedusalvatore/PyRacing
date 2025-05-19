@@ -427,10 +427,10 @@ class Nuvem(pygame.sprite.Sprite):
         n = random.randint(0, 2)
         self.assets = assets
         self.original_image = assets[nuvem][n]
-        self.image = self.original_image  # Initialize image
+        self.image = self.original_image 
         self.rect = self.image.get_rect()
-        self.rect.x = -WIDTH_NUVEM  # Start off-screen left
-        self.rect.y = random.randint(50, HEIGHT/2 - HEIGHT_NUVEM)  # 50 to 260
+        self.rect.x = -WIDTH_NUVEM
+        self.rect.y = random.randint(50, 260)
         self.speedx = random.randint(1, 5)
         self.mask = pygame.mask.from_surface(self.image)
 

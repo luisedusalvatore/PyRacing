@@ -33,9 +33,9 @@ def load_assets():
         pygame.transform.scale(pygame.image.load('files/img/arvore3.png').convert_alpha(),(WIDTH_ARVORE, HEIGHT_ARVORE))
         ]
     assets[nuvem] = [
-        pygame.transform.scale(pygame.image.load('files/img/Nuvem1.png').convert_alpha(),(WIDTH_ARVORE, HEIGHT_ARVORE)),
-        pygame.transform.scale(pygame.image.load('files/img/Nuvem2.png').convert_alpha(),(WIDTH_ARVORE, HEIGHT_ARVORE)),
-        pygame.transform.scale(pygame.image.load('files/img/Nuvem3.png').convert_alpha(),(WIDTH_ARVORE, HEIGHT_ARVORE))
+        pygame.transform.scale(pygame.image.load('files/img/Nuvem1.png').convert_alpha(),(WIDTH_NUVEM, HEIGHT_NUVEM)),
+        pygame.transform.scale(pygame.image.load('files/img/Nuvem2.png').convert_alpha(),(WIDTH_NUVEM, HEIGHT_NUVEM)),
+        pygame.transform.scale(pygame.image.load('files/img/Nuvem3.png').convert_alpha(),(WIDTH_NUVEM, HEIGHT_NUVEM))
     ]
     assets[oleo] = pygame.transform.scale(pygame.image.load('files/img/oleo.png').convert_alpha(),(WIDTH_OLEO, HEIGHT_OLEO))
     explosion_anim = []
