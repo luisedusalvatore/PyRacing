@@ -11,9 +11,13 @@ direita = 'direita'
 oleo = 'oleo'
 arvore = 'arvore'
 estrada = 'estrada'
+grama = 'grama'
+ceu = 'ceu'
 def load_assets():
     assets = {}
-    assets[estrada] = pygame.transform.scale(pygame.image.load('files/img/estrada.png').convert(),(WIDTH - 80,HEIGHT/2))
+    assets[estrada] = pygame.transform.scale(pygame.image.load('files/img/estrada.png').convert_alpha(),(WIDTH - 300,HEIGHT/2))
+    assets[ceu] =  pygame.transform.scale(pygame.image.load('files/img/Ceu_azul.png').convert(),(WIDTH, HEIGHT/2))           
+    assets[grama] =  pygame.transform.scale(pygame.image.load('files/img/Grama_Dia.png').convert(),(WIDTH,HEIGHT/2))
     assets[fundo] = pygame.transform.scale(pygame.image.load('files/img/main_field.png').convert(),(WIDTH,HEIGHT))
     assets[home] = pygame.transform.scale(pygame.image.load('files/img/home.png').convert(),(WIDTH,HEIGHT))
     assets['Carro_Piloto'] = pygame.transform.scale( pygame.image.load('files/img/piloto.png').convert_alpha(), (WIDTH_PILOT,HEIGHT_PILOT))

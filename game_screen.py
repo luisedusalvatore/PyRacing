@@ -9,8 +9,9 @@ from funcoes import *
 def game_screen(window):
     assets = load_assets()
     clock = pygame.time.Clock()
+    grass = assets[grama]
+    sky = assets[ceu]
     pista = assets[estrada]
-   # window.blit(pista, (30,HEIGHT/2))
     all_sprites = pygame.sprite.Group()
     all_enemies = pygame.sprite.Group()
     all_vidas = pygame.sprite.Group()
@@ -157,10 +158,12 @@ def game_screen(window):
                 return DONE
 
         window.fill(BLACK)
-        window.blit(groups['background'], (0, 0))
+        #window.blit(groups['background'], (0, 0))
+        window.blit(sky,(0,0))
+        window.blit(grass,(0,HEIGHT/2))
+        window.blit(pista, (150,HEIGHT/2))
         all_sprites.draw(window)
         if state == PLAYING:
-            window.blit(pista, (30,HEIGHT/2))
             window.blit(player.image, player.rect)
         for i in range(lives):
             window.blit(assets[vida2], (10 + i * 60, 10))
