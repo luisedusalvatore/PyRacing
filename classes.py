@@ -336,8 +336,8 @@ class ArvoreE(pygame.sprite.Sprite):
         self.escala_max = 1.0
         self.inicio_y = HEIGHT / 2
         self.fim_y = HEIGHT
-        self.inicio_x = WIDTH / 2
-        self.fim_x = 0
+        self.inicio_x = (WIDTH / 2) - 300
+        self.fim_x = 0 - 500
 
         new_width = int(self.base_width * self.escala_min)
         new_height = int(self.base_height * self.escala_min)
@@ -385,8 +385,8 @@ class ArvoreD(pygame.sprite.Sprite):
         self.escala_max = 1.0
         self.inicio_y = HEIGHT / 2
         self.fim_y = HEIGHT
-        self.inicio_x = WIDTH / 2
-        self.fim_x = WIDTH
+        self.inicio_x = (WIDTH / 2) + 300
+        self.fim_x = WIDTH + 500
 
         new_width = int(self.base_width * self.escala_min)
         new_height = int(self.base_height * self.escala_min)

@@ -55,7 +55,7 @@ def game_screen(window):
     arvoree_spawn = pygame.time.get_ticks()
     arvored_spawn_interval = random.randint(5000,10000)
     arvored_spawn = pygame.time.get_ticks()
-    tempo_sem_c = 5000
+    tempo_sem_c = 2500
     controle = True
     while state != DONE:
         clock.tick(FPS)
