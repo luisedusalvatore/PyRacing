@@ -50,7 +50,7 @@ def game_screen(window):
     last_enemy_spawn = pygame.time.get_ticks()
     enemy_spawn_interval = random.randint(1000,4000)
     oleo_spawn = pygame.time.get_ticks()
-    oleo_spawn_interval = random.randint(1000, 10000)
+    oleo_spawn_interval = random.randint(5000, 30000)
     arvoree_spawn_interval = random.randint(5000,10000)
     arvoree_spawn = pygame.time.get_ticks()
     arvored_spawn_interval = random.randint(5000,10000)
@@ -101,7 +101,7 @@ def game_screen(window):
                 all_sprites.add(vida)
                 all_vidas.add(vida)
                 last_vida_spawn = now
-                vida_spawn_interval = random.randint(10000, 30000)
+                vida_spawn_interval = random.randint(5000, 15000)
             if now - last_enemy_spawn >enemy_spawn_interval:
                 enemy = Carro(assets)
                 all_sprites.add(enemy)
@@ -114,7 +114,7 @@ def game_screen(window):
                 all_sprites.add(oil)
                 all_oil.add(oil)
                 oleo_spawn = now
-                oleo_spawn_interval = random.randint(1000, 10000)
+                oleo_spawn_interval = random.randint(5000, 50000)
             
             if now - arvoree_spawn > arvoree_spawn_interval:
                 arvoree = ArvoreE(assets)

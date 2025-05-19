@@ -327,9 +327,9 @@ class Oleo(pygame.sprite.Sprite):
 class ArvoreE(pygame.sprite.Sprite):
     def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
-
         self.assets = assets
-        self.original_image = assets[arvore][0]
+        self.assets = assets
+        self.original_image = assets[arvore][2]
         self.base_width = WIDTH_ARVORE
         self.base_height = HEIGHT_ARVORE
         self.escala_min = 0.2
@@ -376,9 +376,9 @@ class ArvoreE(pygame.sprite.Sprite):
 class ArvoreD(pygame.sprite.Sprite):
     def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
-
+        n = random.randint(0,2)
         self.assets = assets
-        self.original_image = assets[arvore][0]
+        self.original_image = assets[arvore][n]
         self.base_width = WIDTH_ARVORE
         self.base_height = HEIGHT_ARVORE
         self.escala_min = 0.2
