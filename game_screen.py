@@ -9,8 +9,8 @@ from funcoes import *
 def game_screen(window):
     assets = load_assets()
     clock = pygame.time.Clock()
-    grass = assets[grama]
-    sky = assets[ceu]
+    grass = assets[grama][0]
+    sky = assets[ceu][0]
     pista = assets[estrada]
     all_sprites = pygame.sprite.Group()
     all_enemies = pygame.sprite.Group()
@@ -55,11 +55,16 @@ def game_screen(window):
     oleo_spawn_interval = random.randint(5000, 30000)
     arvoree_spawn_interval = random.randint(5000,10000)
     arvoree_spawn = pygame.time.get_ticks()
-    arvored_spawn_interval = random.randint(5000,10000)
+    arvored_spawn_interval = random.randint(1000,5000)
     arvored_spawn = pygame.time.get_ticks()
     nuvem_spawn_interval = random.randint(5000,10000)
     nuvem_spawn = pygame.time.get_ticks()
     tempo_sem_c = 2500
+    dia_noite_spawn = pygame.time.get_ticks()
+    dia_noite_spawn_interval = (20000)
+    por_do_sol_spawn = pygame.time.get_ticks()
+    por_do_sol_spawn_interval = (5000)
+    por_do_sol = False
     controle = True
     while state != DONE:
         clock.tick(FPS)
@@ -92,6 +97,19 @@ def game_screen(window):
 
         if state == PLAYING:
             now = pygame.time.get_ticks()
+            if now - dia_noite_spawn > dia_noite_spawn_interval:
+                if por_do_sol == True:
+                    grass = assets[grama][1]
+                    sky = assets[ceu][2]
+                    por_do_sol = False
+                else:
+                    grass = assets[grama][0]
+                    sky = assets[ceu][0]
+                dia_noite_spawn = now 
+                por_do_sol = True
+
+          #  if por_do_sol == False and now - por_do_sol >por_do_sol_spawn: 
+            
             # Spawn faixas periodically
             if now - last_faixa_spawn > faixa_spawn_interval:
                 left = Esquerda(assets)
@@ -129,7 +147,7 @@ def game_screen(window):
                 arvored = ArvoreD(assets)
                 all_sprites.add(arvored)
                 arvored_spawn = now
-                arvored_spawn_interval = random.randint(5000,10000)
+                arvored_spawn_interval = random.randint(1000,5000)
             if now - nuvem_spawn > nuvem_spawn_interval:
                 nuvem = Nuvem(assets)
                 all_sprites.add(nuvem)

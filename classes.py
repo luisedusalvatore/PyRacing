@@ -332,9 +332,9 @@ class ArvoreE(pygame.sprite.Sprite):
         self.original_image = assets[arvore][2]
         self.base_width = WIDTH_ARVORE
         self.base_height = HEIGHT_ARVORE
-        self.escala_min = 0.01
+        self.escala_min = 0.2
         self.escala_max = 1.0
-        self.inicio_y = (HEIGHT / 2 + HEIGHT_ARVORE)
+        self.inicio_y = (HEIGHT / 2)
         self.fim_y = HEIGHT
         self.inicio_x = (WIDTH / 2) - 300
         self.fim_x = 0 - 500
@@ -346,7 +346,7 @@ class ArvoreE(pygame.sprite.Sprite):
         self.rect.centerx = self.inicio_x
         self.rect.y = self.inicio_y
 
-        self.speedy = 10
+        self.speedy = 7
         self.speedx = 0
         self.mask = pygame.mask.from_surface(self.image)
 
@@ -381,9 +381,9 @@ class ArvoreD(pygame.sprite.Sprite):
         self.original_image = assets[arvore][n]
         self.base_width = WIDTH_ARVORE
         self.base_height = HEIGHT_ARVORE
-        self.escala_min = 0.01
+        self.escala_min = 0.2
         self.escala_max = 1.0
-        self.inicio_y = (HEIGHT / 2 + HEIGHT_ARVORE)
+        self.inicio_y = (HEIGHT / 2)
         self.fim_y = HEIGHT
         self.inicio_x = (WIDTH / 2) + 300
         self.fim_x = WIDTH + 500
@@ -395,7 +395,7 @@ class ArvoreD(pygame.sprite.Sprite):
         self.rect.centerx = self.inicio_x
         self.rect.y = self.inicio_y
 
-        self.speedy = 10
+        self.speedy = 7
         self.speedx = 0
         self.mask = pygame.mask.from_surface(self.image)
 
@@ -430,7 +430,7 @@ class Nuvem(pygame.sprite.Sprite):
         self.image = self.original_image 
         self.rect = self.image.get_rect()
         self.rect.x = -WIDTH_NUVEM
-        self.rect.y = random.randint(50, 260)
+        self.rect.y = random.randint(50, 210)
         self.speedx = random.randint(1, 5)
         self.mask = pygame.mask.from_surface(self.image)
 
