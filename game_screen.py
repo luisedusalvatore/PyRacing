@@ -202,12 +202,12 @@ def game_screen(window):
             now = pygame.time.get_ticks()
             if now - explosion_tick > explosion_duration:
                 return DONE
-
+        if player.rect.x >= WIDTH - 160 or player.rect.x <= 160:
+            lives -= 1
         window.fill(BLACK)
         #window.blit(groups['background'], (0, 0))
         window.blit(sky,(0,0))
         window.blit(grass,(0,HEIGHT/2))
-        triangulo(window, pista, HEIGHT/2, HEIGHT, 100, WIDTH-100, HEIGHT/2, WIDTH/2)
         window.blit(pista, (75,HEIGHT/2))
         all_sprites.draw(window)
         if state == PLAYING:
