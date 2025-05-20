@@ -1,7 +1,7 @@
 import pygame
 import random
 import assets
-from configuracoes import *
+from configuracoes import*
 from assets import *
 
 class Piloto(pygame.sprite.Sprite):
@@ -22,20 +22,20 @@ class Piloto(pygame.sprite.Sprite):
         self.rect.x += self.speedx
         
         # Mantem dentro da tela
-        if self.rect.right > WIDTH:
-            self.rect.right = WIDTH
+        if self.rect.right > WIDTH - 160:
+            self.rect.right = WIDTH - 160
         if self.rect.left < 0:
             self.rect.left = 0
 
 class Carro(pygame.sprite.Sprite):
     def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
-
+        n = random.randint(0,1)
         self.assets = assets
-        self.original_image = assets['inimigo']
+        self.original_image = assets['inimigo'][n]
         self.base_width = WIDTH_PILOT
         self.base_height = HEIGHT_PILOT
-        self.escala_min = 0.0001
+        self.escala_min = 0.02
         self.escala_max = 1
         self.inicio_y = (HEIGHT) / 2
         self.fim_y = HEIGHT
@@ -115,7 +115,7 @@ class Vida(pygame.sprite.Sprite):
         self.original_image = assets[vida]
         self.base_width = WIDTH_VIDA
         self.base_height = HEIGHT_VIDA
-        self.escala_min = 0.0001
+        self.escala_min = 0.02
         self.escala_max = 1
         self.inicio_y = (HEIGHT) / 2
         self.fim_y = HEIGHT
@@ -272,7 +272,7 @@ class Oleo(pygame.sprite.Sprite):
         self.original_image = assets[oleo]
         self.base_width = WIDTH_OLEO
         self.base_height = HEIGHT_OLEO
-        self.escala_min = 0.0001
+        self.escala_min = 0.02
         self.escala_max = 1
         self.inicio_y = (HEIGHT) / 2
         self.fim_y = HEIGHT

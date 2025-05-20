@@ -163,7 +163,7 @@ def game_screen(window):
                 arvoree = ArvoreE(assets)
                 all_sprites.add(arvoree)
                 arvoree_spawn = now
-                arvoree_spawn_interval = random.randint(5000,10000)
+                arvoree_spawn_interval = random.randint(1000,5000)
             if now - arvored_spawn > arvored_spawn_interval:
                 arvored = ArvoreD(assets)
                 all_sprites.add(arvored)
@@ -208,7 +208,7 @@ def game_screen(window):
         window.blit(sky,(0,0))
         window.blit(grass,(0,HEIGHT/2))
         triangulo(window, pista, HEIGHT/2, HEIGHT, 100, WIDTH-100, HEIGHT/2, WIDTH/2)
-        #window.blit(pista, (125,HEIGHT/2))
+        window.blit(pista, (75,HEIGHT/2))
         all_sprites.draw(window)
         if state == PLAYING:
             window.blit(player.image, player.rect)

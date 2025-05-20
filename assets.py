@@ -17,7 +17,7 @@ nuvem = 'nuvem'
 pista = 'pista'
 def load_assets():
     assets = {}
-    assets[estrada] = pygame.image.load('files/img/estrada.png').convert_alpha()
+    assets[estrada] = pygame.transform.scale(pygame.image.load('files/img/estrada.png').convert_alpha(), (WIDTH-200, HEIGHT/2))
     assets[ceu] =  [
         pygame.transform.scale(pygame.image.load('files/img/Ceu_azul.png').convert(),(WIDTH, HEIGHT/2)),
         pygame.transform.scale(pygame.image.load('files/img/Por_do_Sol.png').convert(),(WIDTH, HEIGHT/2)),
@@ -30,7 +30,10 @@ def load_assets():
     assets[fundo] = pygame.transform.scale(pygame.image.load('files/img/main_field.png').convert(),(WIDTH,HEIGHT))
     assets[home] = pygame.transform.scale(pygame.image.load('files/img/home.png').convert(),(WIDTH,HEIGHT))
     assets['Carro_Piloto'] = pygame.transform.scale( pygame.image.load('files/img/piloto.png').convert_alpha(), (WIDTH_PILOT,HEIGHT_PILOT))
-    assets['inimigo'] = pygame.transform.scale( pygame.image.load('files/img/inimigo.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR))
+    assets['inimigo'] = [
+        pygame.transform.scale( pygame.image.load('files/img/inimigo.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
+        pygame.transform.scale( pygame.image.load('files/img/Fusca.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR))
+                         ]
     assets[vida] = pygame.transform.scale(pygame.image.load('files/img/vida.png').convert_alpha(),(WIDTH_VIDA, HEIGHT_VIDA))
     assets[vida2] = pygame.transform.scale(pygame.image.load('files/img/vida.png').convert_alpha(),(WIDTH_VIDA, HEIGHT_VIDA))
     assets[esquerda] = pygame.transform.scale(pygame.image.load('files/img/pista_esquerda.png').convert_alpha(),(WIDTH_FAIXA, HEIGHT_FAIXA))
