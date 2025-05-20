@@ -327,9 +327,9 @@ class Oleo(pygame.sprite.Sprite):
 class ArvoreE(pygame.sprite.Sprite):
     def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
+        n = random.randint(0,2)
         self.assets = assets
-        self.assets = assets
-        self.original_image = assets[arvore][2]
+        self.original_image = assets[arvore][n]
         self.base_width = WIDTH_ARVORE
         self.base_height = HEIGHT_ARVORE
         self.escala_min = 0.2
@@ -438,3 +438,4 @@ class Nuvem(pygame.sprite.Sprite):
         self.rect.x += self.speedx
         if self.rect.left > WIDTH:  # Kill when fully off-screen right
             self.kill()
+

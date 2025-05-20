@@ -14,9 +14,10 @@ estrada = 'estrada'
 grama = 'grama'
 ceu = 'ceu'
 nuvem = 'nuvem'
+pista = 'pista'
 def load_assets():
     assets = {}
-    assets[estrada] = pygame.transform.scale(pygame.image.load('files/img/estrada.png').convert_alpha(),(WIDTH - 300,HEIGHT/2))
+    assets[estrada] = pygame.image.load('files/img/estrada.png').convert_alpha()
     assets[ceu] =  [
         pygame.transform.scale(pygame.image.load('files/img/Ceu_azul.png').convert(),(WIDTH, HEIGHT/2)),
         pygame.transform.scale(pygame.image.load('files/img/Por_do_Sol.png').convert(),(WIDTH, HEIGHT/2)),
@@ -45,6 +46,7 @@ def load_assets():
         pygame.transform.scale(pygame.image.load('files/img/Nuvem3.png').convert_alpha(),(WIDTH_NUVEM, HEIGHT_NUVEM))
     ]
     assets[oleo] = pygame.transform.scale(pygame.image.load('files/img/oleo.png').convert_alpha(),(WIDTH_OLEO, HEIGHT_OLEO))
+    assets[pista] = pygame.transform.scale(pygame.image.load('files/img/Pista.png').convert_alpha(),(800, 100))
     explosion_anim = []
     for i in range(9):
          #Os arquivos de animação são numerados de 00 a 08   

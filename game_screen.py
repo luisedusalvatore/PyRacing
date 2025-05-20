@@ -207,7 +207,8 @@ def game_screen(window):
         #window.blit(groups['background'], (0, 0))
         window.blit(sky,(0,0))
         window.blit(grass,(0,HEIGHT/2))
-        window.blit(pista, (150,HEIGHT/2))
+        triangulo(window, pista, HEIGHT/2, HEIGHT, 100, WIDTH-100, HEIGHT/2, WIDTH/2)
+        #window.blit(pista, (125,HEIGHT/2))
         all_sprites.draw(window)
         if state == PLAYING:
             window.blit(player.image, player.rect)
