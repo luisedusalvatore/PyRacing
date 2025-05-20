@@ -38,7 +38,10 @@ def game_screen(window):
     PLAYING = 1
     EXPLODING = 2
     state = PLAYING
-
+    dia = 'dia'
+    por_do_sol = 'por do sol'
+    nascer_do_sol = 'nascer do sol'
+    noite = 'noite'
     keysdown = {}
     score = 0
     lives = 4
@@ -60,11 +63,15 @@ def game_screen(window):
     nuvem_spawn_interval = random.randint(5000,10000)
     nuvem_spawn = pygame.time.get_ticks()
     tempo_sem_c = 2500
-    dia_noite_spawn = pygame.time.get_ticks()
-    dia_noite_spawn_interval = (20000)
-    por_do_sol_spawn = pygame.time.get_ticks()
-    por_do_sol_spawn_interval = (5000)
-    por_do_sol = False
+    horarios = {
+        'dia':30000,
+        'por do sol': 10000,
+        'nascer do sol' : 10000,
+        'noite' : 30000
+        #'nascer do sol' : 10000
+    }
+    momento  = 'dia'
+    hora = pygame.time.get_ticks()
     controle = True
     while state != DONE:
         clock.tick(FPS)
@@ -97,19 +104,33 @@ def game_screen(window):
 
         if state == PLAYING:
             now = pygame.time.get_ticks()
-            if now - dia_noite_spawn > dia_noite_spawn_interval:
-                if por_do_sol == True:
-                    grass = assets[grama][1]
-                    sky = assets[ceu][2]
-                    por_do_sol = False
-                else:
-                    grass = assets[grama][0]
-                    sky = assets[ceu][0]
-                dia_noite_spawn = now 
-                por_do_sol = True
+            if now - hora > horarios[momento]:
+                if momento == dia:
+                    momento = por_do_sol
+                elif momento == por_do_sol:
+                    momento = noite
+                elif momento == noite:
+                    momento = nascer_do_sol
+                elif momento == nascer_do_sol:
+                    momento = dia
+                hora = now
+            if momento == dia:
+                sky = assets[ceu][0]
+                grass = assets[grama][0]
+                pista = assets[estrada]
+            elif momento ==  por_do_sol:
+                sky = assets[ceu][1]
+                grass = assets[grama][0]
+                pista = assets[estrada]
+            elif momento ==  nascer_do_sol:
+                sky = assets[ceu][1]
+                grass = assets[grama][0]
+                pista = assets[estrada]
+            else:  
+                sky = assets[ceu][2]
+                grass = assets[grama][1]
+                pista = assets[estrada]
 
-          #  if por_do_sol == False and now - por_do_sol >por_do_sol_spawn: 
-            
             # Spawn faixas periodically
             if now - last_faixa_spawn > faixa_spawn_interval:
                 left = Esquerda(assets)
