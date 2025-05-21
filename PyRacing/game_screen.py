@@ -46,8 +46,8 @@ def game_screen(window):
     noite = 'noite'
     keysdown = {}
     score = 0
-    lives = 4
-    max_lives = 8
+    lives = 3
+    max_lives = 5
     explosion_tick = 0
     explosion_duration = 850
     last_vida_spawn = pygame.time.get_ticks()
@@ -173,7 +173,7 @@ def game_screen(window):
                 vida_spawn_interval = random.randint(5000, 15000)
             if now - last_enemy_spawn > enemy_spawn_interval:
                 enemy = Carro(assets)
-                enemy.speedy += score // 1000
+                enemy.speedy += score // 500
                 all_sprites.add(enemy)
                 all_enemies.add(enemy)
                 last_enemy_spawn = now
@@ -219,8 +219,9 @@ def game_screen(window):
 
             vida_hits = pygame.sprite.spritecollide(player, all_vidas, True, pygame.sprite.collide_mask)
             for vida in vida_hits:
-                if lives < max_lives:
-                    score += 100
+                score += 100
+                assets[vida_som].play()
+                if lives <= max_lives:
                     lives += 1
                     assets[vida_som].play()
 
