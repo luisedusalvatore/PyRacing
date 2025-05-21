@@ -30,7 +30,7 @@ class Piloto(pygame.sprite.Sprite):
 class Carro(pygame.sprite.Sprite):
     def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
-        n = random.randint(0,1)
+        n = random.randint(0,3)
         self.assets = assets
         self.original_image = assets['inimigo'][n]
         self.base_width = WIDTH_PILOT

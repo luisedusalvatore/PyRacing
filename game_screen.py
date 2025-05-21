@@ -198,6 +198,8 @@ def game_screen(window):
             for hit in hits:
                 explosao = Explosion(hit.rect.center, assets)
                 all_sprites.add(explosao)
+                if lives > 0:
+                    assets[explosao_som].play()
                 lives -= 1
                 if lives == 0:
                     explosao = Explosion(player.rect.center, assets)
@@ -219,6 +221,7 @@ def game_screen(window):
                 controle = True
             arvore_hits = pygame.sprite.spritecollide(player, all_arvores, False, pygame.sprite.collide_mask)
             for arvore in arvore_hits:
+                assets[explosao_som].play()
                 explosao = Explosion(player.rect.center, assets)
                 all_sprites.add(explosao)
                 player.kill()
@@ -239,6 +242,7 @@ def game_screen(window):
                     else:
                         inicio_fora_pista = None
         elif state == EXPLODING:
+            #assets[explosao_som].play()
             now = pygame.time.get_ticks()
             if now - explosion_tick > explosion_duration:
                 return DONE
@@ -258,8 +262,8 @@ def game_screen(window):
         all_sprites.draw(window)
         if state == PLAYING:
             window.blit(player.image, player.rect)
-        for i in range(lives):
-            window.blit(assets[vida2], (10 + i * 60, 10))
+        #for i in range(lives):
+          #  window.blit(assets[vida2], (10 + i * 60, 10))
         all_sprites.update()
         # Debug: Show alpha during transition
         pygame.display.update()
