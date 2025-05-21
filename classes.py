@@ -5,7 +5,7 @@ from configuracoes import*
 from assets import *
 
 class Piloto(pygame.sprite.Sprite):
-    def __init__(self,groups, assets):
+    def __init__(self, groups, assets):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = assets['Carro_Piloto']
@@ -15,22 +15,49 @@ class Piloto(pygame.sprite.Sprite):
         self.rect.bottom = HEIGHT - 5
         self.speedx = 0
         self.groups = groups
-        self.asstes = assets
+        self.assets = assets
+        # Shaking attributes
+        self.is_shaking = False
+        self.shake_timer = 0
+        self.shake_duration = 2500  # Matches tempo_sem_c
+        self.shake_offset_x = 0
+        self.shake_offset_y = 0
+        self.shake_intensity = 5  # Max pixel offset for shake
+
+    def start_shake(self):
+        """Start the shaking effect."""
+        self.is_shaking = True
+        self.shake_timer = pygame.time.get_ticks()
 
     def update(self):
-        # Atualização da posição da nave
+        # Update position based on speed
         self.rect.x += self.speedx
-        
-        # Mantem dentro da tela
+
+        # Keep within screen bounds
         if self.rect.right > WIDTH:
             self.rect.right = WIDTH
         if self.rect.left < 0:
             self.rect.left = 0
 
+        # Handle shaking
+        if self.is_shaking:
+            now = pygame.time.get_ticks()
+            if now - self.shake_timer > self.shake_duration:
+                self.is_shaking = False
+                self.shake_offset_x = 0
+                self.shake_offset_y = 0
+            else:
+                # Apply random shake offset
+                self.shake_offset_x = random.randint(-self.shake_intensity, self.shake_intensity)
+                self.shake_offset_y = random.randint(-self.shake_intensity, self.shake_intensity)
+        else:
+            self.shake_offset_x = 0
+            self.shake_offset_y = 0
+
 class Carro(pygame.sprite.Sprite):
     def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
-        n = random.randint(0,3)
+        n = random.randint(0, 3)
         self.assets = assets
         self.original_image = assets['inimigo'][n]
         self.base_width = WIDTH_PILOT
@@ -264,6 +291,7 @@ class Direita(pygame.sprite.Sprite):
 
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
             self.kill()
+
 class Oleo(pygame.sprite.Sprite):
     def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
@@ -327,7 +355,7 @@ class Oleo(pygame.sprite.Sprite):
 class ArvoreE(pygame.sprite.Sprite):
     def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
-        n = random.randint(0,2)
+        n = random.randint(0, 2)
         self.assets = assets
         self.original_image = assets[arvore][n]
         self.base_width = WIDTH_ARVORE
@@ -376,7 +404,7 @@ class ArvoreE(pygame.sprite.Sprite):
 class ArvoreD(pygame.sprite.Sprite):
     def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
-        n = random.randint(0,2)
+        n = random.randint(0, 2)
         self.assets = assets
         self.original_image = assets[arvore][n]
         self.base_width = WIDTH_ARVORE
@@ -421,13 +449,14 @@ class ArvoreD(pygame.sprite.Sprite):
 
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
             self.kill()
+
 class Nuvem(pygame.sprite.Sprite):
     def __init__(self, assets):
         pygame.sprite.Sprite.__init__(self)
         n = random.randint(0, 2)
         self.assets = assets
         self.original_image = assets[nuvem][n]
-        self.image = self.original_image 
+        self.image = self.original_image
         self.rect = self.image.get_rect()
         self.rect.x = -WIDTH_NUVEM
         self.rect.y = random.randint(50, 210)
@@ -438,4 +467,3 @@ class Nuvem(pygame.sprite.Sprite):
         self.rect.x += self.speedx
         if self.rect.left > WIDTH:  # Kill when fully off-screen right
             self.kill()
-
