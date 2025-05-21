@@ -64,6 +64,7 @@ def game_screen(window):
     arvored_spawn = pygame.time.get_ticks()
     nuvem_spawn_interval = random.randint(5000, 10000)
     nuvem_spawn = pygame.time.get_ticks()
+    ultimo_incremento = pygame.time.get_ticks()
     tempo_sem_c = 2500
     inicio_fora_pista = None
     delay_fora_pista = 1000
@@ -115,6 +116,9 @@ def game_screen(window):
 
         if state == PLAYING:
             now = pygame.time.get_ticks()
+            if now - ultimo_incremento >= 10000:
+                score += 100
+                ultimo_incremento = now
             if not esta_transicionando and now - hora > horarios[momento]:
                 # Start transition
                 esta_transicionando = True
@@ -145,6 +149,8 @@ def game_screen(window):
                     grass = proxima_grama
                     hora = now
                     esta_transicionando = False
+                    if momento == dia:
+                        score += 1000
                     proximo_momento = None
                     proximo_ceu = None
                     proxima_grama = None
@@ -211,6 +217,7 @@ def game_screen(window):
             vida_hits = pygame.sprite.spritecollide(player, all_vidas, True, pygame.sprite.collide_mask)
             for vida in vida_hits:
                 if lives < max_lives:
+                    score += 100
                     lives += 1
 
             oil_hits = pygame.sprite.spritecollide(player, all_oil, True, pygame.sprite.collide_mask)
@@ -265,6 +272,11 @@ def game_screen(window):
             window.blit(player.image, (player.rect.x + player.shake_offset_x, player.rect.y + player.shake_offset_y))
         for i in range(lives):
             window.blit(assets[vida2], (10 + i * 60, 10))
+        
+        text_surface = assets[fonte].render(str(score), True, YELLOW)
+        text_rect = text_surface.get_rect()
+        text_rect.topright = (WIDTH - 100, 20)
+        window.blit(text_surface, text_rect)
         all_sprites.update()
         pygame.display.update()
 

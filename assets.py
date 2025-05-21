@@ -17,6 +17,7 @@ nuvem = 'nuvem'
 pista = 'pista'
 musica = 'musica'
 explosao_som = 'explosao_som'
+fonte = 'fonte'
 def load_assets():
     assets = {}
     assets[estrada] = pygame.transform.scale(pygame.image.load('files/img/estrada.png').convert_alpha(), (WIDTH-200, HEIGHT/2))
@@ -36,7 +37,13 @@ def load_assets():
         pygame.transform.scale( pygame.image.load('files/img/inimigo.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
         pygame.transform.scale( pygame.image.load('files/img/Fusca.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
         pygame.transform.scale( pygame.image.load('files/img/uno.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
-        pygame.transform.scale( pygame.image.load('files/img/caminhao.png').convert_alpha(), (WIDTH_CAMINHAO,HEIGHT_CAMINHAO))
+        pygame.transform.scale( pygame.image.load('files/img/caminhao.png').convert_alpha(), (WIDTH_CAMINHAO,HEIGHT_CAMINHAO)),
+        pygame.transform.scale( pygame.image.load('files/img/caminhao_amarelo.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
+        pygame.transform.scale( pygame.image.load('files/img/caminhao_preto.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
+        pygame.transform.scale( pygame.image.load('files/img/fusca_verde.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
+        pygame.transform.scale( pygame.image.load('files/img/fusca_vermelho.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
+        pygame.transform.scale( pygame.image.load('files/img/renegade_amarelo.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
+        pygame.transform.scale( pygame.image.load('files/img/renegade_rosa.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR))
                          ]
     assets[vida] = pygame.transform.scale(pygame.image.load('files/img/vida.png').convert_alpha(),(WIDTH_VIDA, HEIGHT_VIDA))
     assets[vida2] = pygame.transform.scale(pygame.image.load('files/img/vida.png').convert_alpha(),(WIDTH_VIDA, HEIGHT_VIDA))
@@ -65,4 +72,5 @@ def load_assets():
         img = pygame.transform.scale(img, (WIDTH_CAR, HEIGHT_CAR))
         explosion_anim.append(img)
     assets[explosao] = explosion_anim 
+    assets[fonte] = pygame.font.Font(('files/font/PressStart2P.ttf'), 48)
     return assets
