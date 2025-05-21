@@ -15,6 +15,7 @@ grama = 'grama'
 ceu = 'ceu'
 nuvem = 'nuvem'
 pista = 'pista'
+musica = 'musica'
 def load_assets():
     assets = {}
     assets[estrada] = pygame.transform.scale(pygame.image.load('files/img/estrada.png').convert_alpha(), (WIDTH-200, HEIGHT/2))
@@ -50,6 +51,8 @@ def load_assets():
     ]
     assets[oleo] = pygame.transform.scale(pygame.image.load('files/img/oleo.png').convert_alpha(),(WIDTH_OLEO, HEIGHT_OLEO))
     assets[pista] = pygame.transform.scale(pygame.image.load('files/img/Pista.png').convert_alpha(),(800, 100))
+    assets[musica] = pygame.mixer.music.load('files/music/musica.mp3')
+    pygame.mixer.music.set_volume(0.4)
     explosion_anim = []
     for i in range(9):
          #Os arquivos de animação são numerados de 00 a 08   

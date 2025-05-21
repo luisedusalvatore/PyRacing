@@ -68,10 +68,10 @@ def game_screen(window):
     inicio_fora_pista = None
     delay_fora_pista = 1000
     horarios = {
-        'dia': 10000,
-        'por do sol': 5000,
-        'nascer do sol': 5000,
-        'noite': 10000
+        'dia': 30000,
+        'por do sol': 10000,
+        'nascer do sol': 10000,
+        'noite': 30000
     }
     momento = 'dia'
     hora = pygame.time.get_ticks()
@@ -83,6 +83,7 @@ def game_screen(window):
     proximo_ceu = None
     proxima_grama = None
 
+    pygame.mixer.music.play(loops=-1)
     while state != DONE:
         clock.tick(FPS)
         for event in pygame.event.get():
