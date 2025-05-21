@@ -63,6 +63,8 @@ def game_screen(window):
     nuvem_spawn_interval = random.randint(5000,10000)
     nuvem_spawn = pygame.time.get_ticks()
     tempo_sem_c = 2500
+    inicio_fora_pista = None
+    delay_fora_pista = 1000
     horarios = {
         'dia':30000,
         'por do sol': 10000,
@@ -203,8 +205,21 @@ def game_screen(window):
             if now - explosion_tick > explosion_duration:
                 return DONE
         if player.rect.x >= WIDTH - 160 or player.rect.x <= 160:
-            lives -= 1
-        window.fill(BLACK)
+            if inicio_fora_pista == None:
+                inicio_fora_pista = now
+            if now - inicio_fora_pista > delay_fora_pista:
+                lives -= 1
+                inicio_fora_pista = None
+                if lives == 0:
+                    explosao = Explosion(player.rect.center, assets)
+                    all_sprites.add(explosao)
+                    player.kill()
+                    state = EXPLODING
+                    explosion_tick = now
+                else:
+                    inicio_fora_pista = None
+
+        window.fill(BLACK) 
         #window.blit(groups['background'], (0, 0))
         window.blit(sky,(0,0))
         window.blit(grass,(0,HEIGHT/2))

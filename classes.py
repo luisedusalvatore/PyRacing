@@ -22,10 +22,10 @@ class Piloto(pygame.sprite.Sprite):
         self.rect.x += self.speedx
         
         # Mantem dentro da tela
-        if self.rect.right > WIDTH - 160:
-            self.rect.right = WIDTH - 160
-        if self.rect.left < 160:
-            self.rect.left = 160
+        if self.rect.right > WIDTH:
+            self.rect.right = WIDTH
+        if self.rect.left < 0:
+            self.rect.left = 0
 
 class Carro(pygame.sprite.Sprite):
     def __init__(self, assets):
