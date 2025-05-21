@@ -66,15 +66,21 @@ def game_screen(window):
     inicio_fora_pista = None
     delay_fora_pista = 1000
     horarios = {
-        'dia':30000,
-        'por do sol': 10000,
-        'nascer do sol' : 10000,
-        'noite' : 30000
-        #'nascer do sol' : 10000
+        'dia': 10000,
+        'por do sol': 5000,
+        'nascer do sol': 5000,
+        'noite': 10000
     }
-    momento  = 'dia'
+    momento = 'dia'
     hora = pygame.time.get_ticks()
     controle = True
+    esta_transicionando = False
+    inicio_transicao = 0
+    duracao_transicao = 3000  # 3 seconds
+    proximo_momento = None
+    proximo_ceu = None
+    proxima_grama = None
+
     while state != DONE:
         clock.tick(FPS)
         for event in pygame.event.get():
@@ -106,32 +112,39 @@ def game_screen(window):
 
         if state == PLAYING:
             now = pygame.time.get_ticks()
-            if now - hora > horarios[momento]:
+            if not esta_transicionando and now - hora > horarios[momento]:
+                # Start transition
+                esta_transicionando = True
+                inicio_transicao = now
                 if momento == dia:
-                    momento = por_do_sol
+                    proximo_momento = por_do_sol
+                    proximo_ceu = assets[ceu][1]
+                    proxima_grama = assets[grama][0]
                 elif momento == por_do_sol:
-                    momento = noite
+                    proximo_momento = noite
+                    proximo_ceu = assets[ceu][2]
+                    proxima_grama = assets[grama][1]
                 elif momento == noite:
-                    momento = nascer_do_sol
+                    proximo_momento = nascer_do_sol
+                    proximo_ceu = assets[ceu][1]
+                    proxima_grama = assets[grama][0]
                 elif momento == nascer_do_sol:
-                    momento = dia
-                hora = now
-            if momento == dia:
-                sky = assets[ceu][0]
-                grass = assets[grama][0]
-                pista = assets[estrada]
-            elif momento ==  por_do_sol:
-                sky = assets[ceu][1]
-                grass = assets[grama][0]
-                pista = assets[estrada]
-            elif momento ==  nascer_do_sol:
-                sky = assets[ceu][1]
-                grass = assets[grama][0]
-                pista = assets[estrada]
-            else:  
-                sky = assets[ceu][2]
-                grass = assets[grama][1]
-                pista = assets[estrada]
+                    proximo_momento = dia
+                    proximo_ceu = assets[ceu][0]
+                    proxima_grama = assets[grama][0]
+
+            if esta_transicionando:
+                passado = now - inicio_transicao
+                if passado >= duracao_transicao:
+                    # End transition
+                    momento = proximo_momento
+                    sky = proximo_ceu
+                    grass = proxima_grama
+                    hora = now
+                    esta_transicionando = False
+                    proximo_momento = None
+                    proximo_ceu = None
+                    proxima_grama = None
 
             # Spawn faixas periodically
             if now - last_faixa_spawn > faixa_spawn_interval:
@@ -147,7 +160,7 @@ def game_screen(window):
                 all_vidas.add(vida)
                 last_vida_spawn = now
                 vida_spawn_interval = random.randint(5000, 15000)
-            if now - last_enemy_spawn >enemy_spawn_interval:
+            if now - last_enemy_spawn > enemy_spawn_interval:
                 enemy = Carro(assets)
                 all_sprites.add(enemy)
                 all_enemies.add(enemy)
@@ -178,7 +191,6 @@ def game_screen(window):
                 nuvem_spawn_interval = random.randint(1000,10000)
             hits = pygame.sprite.spritecollide(player, all_enemies, True, pygame.sprite.collide_mask)
             for hit in hits:
-            
                 explosao = Explosion(hit.rect.center, assets)
                 all_sprites.add(explosao)
                 lives -= 1
@@ -195,41 +207,49 @@ def game_screen(window):
                     lives += 1
             
             oil_hits = pygame.sprite.spritecollide(player, all_oil, True, pygame.sprite.collide_mask)
-            for oil in oil_hits:
+            for oil in hits:
                 controle = False
                 s_controle = pygame.time.get_ticks()
             if not controle and now - s_controle > tempo_sem_c:
                 controle = True
+            if player.rect.x >= WIDTH - 160 or player.rect.x <= 160:
+                if inicio_fora_pista == None:
+                    inicio_fora_pista = now
+                if now - inicio_fora_pista > delay_fora_pista:
+                    lives -= 1
+                    inicio_fora_pista = None
+                    if lives == 0:
+                        explosao = Explosion(player.rect.center, assets)
+                        all_sprites.add(explosao)
+                        player.kill()
+                        state = EXPLODING
+                        explosion_tick = now
+                    else:
+                        inicio_fora_pista = None
         elif state == EXPLODING:
             now = pygame.time.get_ticks()
             if now - explosion_tick > explosion_duration:
                 return DONE
-        if player.rect.x >= WIDTH - 160 or player.rect.x <= 160:
-            if inicio_fora_pista == None:
-                inicio_fora_pista = now
-            if now - inicio_fora_pista > delay_fora_pista:
-                lives -= 1
-                inicio_fora_pista = None
-                if lives == 0:
-                    explosao = Explosion(player.rect.center, assets)
-                    all_sprites.add(explosao)
-                    player.kill()
-                    state = EXPLODING
-                    explosion_tick = now
-                else:
-                    inicio_fora_pista = None
 
-        window.fill(BLACK) 
-        #window.blit(groups['background'], (0, 0))
-        window.blit(sky,(0,0))
-        window.blit(grass,(0,HEIGHT/2))
-        window.blit(pista, (75,HEIGHT/2))
+        window.fill(BLACK)
+        if esta_transicionando and proximo_ceu is not None:
+            fade(window, sky, proximo_ceu, (0, 0), duracao_transicao, passado)
+            # Only fade grass if transitioning to a different grass asset
+            if proxima_grama is not None and proxima_grama != grass:
+                fade(window, grass, proxima_grama, (0, HEIGHT/2), duracao_transicao, passado)
+            else:
+                window.blit(grass, (0, HEIGHT/2))
+        else:
+            window.blit(sky, (0, 0))
+            window.blit(grass, (0, HEIGHT/2))
+        window.blit(pista, (75, HEIGHT/2))
         all_sprites.draw(window)
         if state == PLAYING:
             window.blit(player.image, player.rect)
         for i in range(lives):
             window.blit(assets[vida2], (10 + i * 60, 10))
         all_sprites.update()
+        # Debug: Show alpha during transition
         pygame.display.update()
 
     return DONE
