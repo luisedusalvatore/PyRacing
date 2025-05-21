@@ -119,6 +119,8 @@ def game_screen(window):
             if now - ultimo_incremento >= 10000:
                 score += 100
                 ultimo_incremento = now
+
+
             if not esta_transicionando and now - hora > horarios[momento]:
                 # Start transition
                 esta_transicionando = True
@@ -171,6 +173,7 @@ def game_screen(window):
                 vida_spawn_interval = random.randint(5000, 15000)
             if now - last_enemy_spawn > enemy_spawn_interval:
                 enemy = Carro(assets)
+                enemy.speedy += score // 1000
                 all_sprites.add(enemy)
                 all_enemies.add(enemy)
                 last_enemy_spawn = now
@@ -219,10 +222,12 @@ def game_screen(window):
                 if lives < max_lives:
                     score += 100
                     lives += 1
+                    assets[vida_som].play()
 
             oil_hits = pygame.sprite.spritecollide(player, all_oil, True, pygame.sprite.collide_mask)
             for oil in oil_hits:
                 controle = False
+                assets[oleo_som].play()
                 player.start_shake()  # Trigger shaking
                 s_controle = pygame.time.get_ticks()
             if not controle and now - s_controle > tempo_sem_c:

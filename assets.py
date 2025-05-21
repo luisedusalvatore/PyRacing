@@ -18,6 +18,8 @@ pista = 'pista'
 musica = 'musica'
 explosao_som = 'explosao_som'
 fonte = 'fonte'
+vida_som = 'vida_som'
+oleo_som = 'oleo_som'
 def load_assets():
     assets = {}
     assets[estrada] = pygame.transform.scale(pygame.image.load('files/img/estrada.png').convert_alpha(), (WIDTH-200, HEIGHT/2))
@@ -65,6 +67,8 @@ def load_assets():
     pygame.mixer.music.set_volume(0.4)
     explosion_anim = []
     assets[explosao_som] = pygame.mixer.Sound('files/music/explosao.wav')
+    assets[vida_som] = pygame.mixer.Sound('files/music/vida_up.mp3')
+    assets[oleo_som] = pygame.mixer.Sound('files/music/escorregar.mp3')
     for i in range(9):
          #Os arquivos de animação são numerados de 00 a 08   
         filename = os.path.join(IMG_DIR, 'pixel_art_explosion_0{}.png'.format(i))
