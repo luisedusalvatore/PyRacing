@@ -17,6 +17,7 @@ def game_screen(window):
     all_vidas = pygame.sprite.Group()
     all_faixas = pygame.sprite.Group()
     all_oil = pygame.sprite.Group()
+    all_arvores = pygame.sprite.Group()
 
     groups = {}
     groups['all_enemies'] = all_enemies
@@ -24,6 +25,7 @@ def game_screen(window):
     groups['all_vidas'] = all_vidas
     groups["all_faixas"] = all_faixas
     groups['background'] = pista
+    groups['all_arvores'] = all_arvores
 
     player = Piloto(groups, assets)
     all_sprites.add(player)
@@ -177,11 +179,13 @@ def game_screen(window):
             if now - arvoree_spawn > arvoree_spawn_interval:
                 arvoree = ArvoreE(assets)
                 all_sprites.add(arvoree)
+                all_arvores.add(arvoree)
                 arvoree_spawn = now
                 arvoree_spawn_interval = random.randint(1000,5000)
             if now - arvored_spawn > arvored_spawn_interval:
                 arvored = ArvoreD(assets)
                 all_sprites.add(arvored)
+                all_arvores.add(arvored)
                 arvored_spawn = now
                 arvored_spawn_interval = random.randint(1000,5000)
             if now - nuvem_spawn > nuvem_spawn_interval:
@@ -207,11 +211,18 @@ def game_screen(window):
                     lives += 1
             
             oil_hits = pygame.sprite.spritecollide(player, all_oil, True, pygame.sprite.collide_mask)
-            for oil in hits:
+            for oil in oil_hits:
                 controle = False
                 s_controle = pygame.time.get_ticks()
             if not controle and now - s_controle > tempo_sem_c:
                 controle = True
+            arvore_hits = pygame.sprite.spritecollide(player, all_arvores, False, pygame.sprite.collide_mask)
+            for arvore in arvore_hits:
+                explosao = Explosion(player.rect.center, assets)
+                all_sprites.add(explosao)
+                player.kill()
+                state = EXPLODING
+                explosion_tick = pygame.time.get_ticks()
             if player.rect.x >= WIDTH - 160 or player.rect.x <= 160:
                 if inicio_fora_pista == None:
                     inicio_fora_pista = now
