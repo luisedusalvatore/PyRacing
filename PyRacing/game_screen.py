@@ -173,7 +173,7 @@ def game_screen(window):
                 vida_spawn_interval = random.randint(5000, 15000)
             if now - last_enemy_spawn > enemy_spawn_interval:
                 enemy = Carro(assets)
-                enemy.speedy += score // 500
+                enemy.speedy += score // 250
                 all_sprites.add(enemy)
                 all_enemies.add(enemy)
                 last_enemy_spawn = now
