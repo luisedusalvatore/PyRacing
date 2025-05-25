@@ -161,12 +161,15 @@ def game_screen(window):
             if now - last_faixa_spawn > faixa_spawn_interval:
                 left = Esquerda(assets)
                 right = Direita(assets)
+                right.speedy += score // 250
+                left.speedy += score // 250
                 all_sprites.add(left, right)
                 all_faixas.add(left, right)
                 last_faixa_spawn = now
             # Spawn vida periodically
             if now - last_vida_spawn > vida_spawn_interval:
                 vida = Vida(assets)
+                vida.speedy += score // 250
                 all_sprites.add(vida)
                 all_vidas.add(vida)
                 last_vida_spawn = now
@@ -181,6 +184,7 @@ def game_screen(window):
             # Enemy collisions
             if now - oleo_spawn > oleo_spawn_interval:
                 oil = Oleo(assets)
+                oil.speedy += score // 250
                 all_sprites.add(oil)
                 all_oil.add(oil)
                 oleo_spawn = now
@@ -188,12 +192,14 @@ def game_screen(window):
 
             if now - arvoree_spawn > arvoree_spawn_interval:
                 arvoree = ArvoreE(assets)
+                arvoree.speedy += score // 250
                 all_sprites.add(arvoree)
                 all_arvores.add(arvoree)
                 arvoree_spawn = now
                 arvoree_spawn_interval = random.randint(1000, 5000)
             if now - arvored_spawn > arvored_spawn_interval:
                 arvored = ArvoreD(assets)
+                arvored.speedy += score // 250
                 all_sprites.add(arvored)
                 all_arvores.add(arvored)
                 arvored_spawn = now
