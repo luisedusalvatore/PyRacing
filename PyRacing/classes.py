@@ -3,12 +3,13 @@ import random
 import assets
 from configuracoes import*
 from assets import *
+from janela import *
 
 class Piloto(pygame.sprite.Sprite):
     def __init__(self, groups, assets):
         pygame.sprite.Sprite.__init__(self)
 
-        self.image = assets['Carro_Piloto']
+        self.image = assets['Carro_Piloto'][cor]
         self.mask = pygame.mask.from_surface(self.image)
         self.rect = self.image.get_rect()
         self.rect.centerx = WIDTH / 2

@@ -21,6 +21,7 @@ fonte = 'fonte'
 fonte2 = 'fonte2'
 vida_som = 'vida_som'
 oleo_som = 'oleo_som'
+escolha = 'escolha'
 def load_assets():
     assets = {}
     assets[estrada] = pygame.transform.scale(pygame.image.load('files/img/estrada.png').convert_alpha(), (WIDTH-200, HEIGHT/2))
@@ -35,14 +36,19 @@ def load_assets():
         ]
     assets[fundo] = pygame.transform.scale(pygame.image.load('files/img/main_field.png').convert(),(WIDTH,HEIGHT))
     assets[home] = pygame.transform.scale(pygame.image.load('files/img/home.png').convert(),(WIDTH,HEIGHT))
-    assets['Carro_Piloto'] = pygame.transform.scale( pygame.image.load('files/img/piloto.png').convert_alpha(), (WIDTH_PILOT,HEIGHT_PILOT))
+    assets['Carro_Piloto'] = [
+        pygame.transform.scale( pygame.image.load('files/img/piloto.png').convert_alpha(), (WIDTH_PILOT,HEIGHT_PILOT)),
+        pygame.transform.scale( pygame.image.load('files/img/azul.png').convert_alpha(), (WIDTH_PILOT,HEIGHT_PILOT)),
+        pygame.transform.scale( pygame.image.load('files/img/roxo.png').convert_alpha(), (WIDTH_PILOT,HEIGHT_PILOT)),
+        pygame.transform.scale( pygame.image.load('files/img/verde.png').convert_alpha(), (WIDTH_PILOT,HEIGHT_PILOT))
+                              ]
     assets['inimigo'] = [
         pygame.transform.scale( pygame.image.load('files/img/inimigo.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
         pygame.transform.scale( pygame.image.load('files/img/Fusca.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
         pygame.transform.scale( pygame.image.load('files/img/uno.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
         pygame.transform.scale( pygame.image.load('files/img/caminhao.png').convert_alpha(), (WIDTH_CAMINHAO,HEIGHT_CAMINHAO)),
         pygame.transform.scale( pygame.image.load('files/img/caminhao_amarelo.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
-        pygame.transform.scale( pygame.image.load('files/img/caminhao_preto.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
+        pygame.transform.scale( pygame.image.load('files/img/kwid_creme.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
         pygame.transform.scale( pygame.image.load('files/img/fusca_verde.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
         pygame.transform.scale( pygame.image.load('files/img/fusca_vermelho.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
         pygame.transform.scale( pygame.image.load('files/img/renegade_amarelo.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
@@ -51,6 +57,7 @@ def load_assets():
     assets[vida] = pygame.transform.scale(pygame.image.load('files/img/vida.png').convert_alpha(),(WIDTH_VIDA, HEIGHT_VIDA))
     assets[vida2] = pygame.transform.scale(pygame.image.load('files/img/vida.png').convert_alpha(),(WIDTH_VIDA, HEIGHT_VIDA))
     assets[esquerda] = pygame.transform.scale(pygame.image.load('files/img/pista_esquerda.png').convert_alpha(),(WIDTH_FAIXA, HEIGHT_FAIXA))
+    assets[escolha] = pygame.transform.scale(pygame.image.load('files/img/escolha_carro.jpg').convert_alpha(),(WIDTH, HEIGHT))
     assets[direita] = pygame.transform.scale(pygame.image.load('files/img/pista_direita.png').convert_alpha(),(WIDTH_FAIXA, HEIGHT_FAIXA))
     assets[arvore] = [
         pygame.transform.scale(pygame.image.load('files/img/arvore.png').convert_alpha(),(WIDTH_ARVORE, HEIGHT_ARVORE)),
