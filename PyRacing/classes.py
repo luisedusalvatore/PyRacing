@@ -6,7 +6,7 @@ from assets import *
 from janela import *
 
 class Piloto(pygame.sprite.Sprite):
-    def __init__(self, groups, assets):
+    def __init__(self, groups, assets, cor):
         pygame.sprite.Sprite.__init__(self)
 
         self.image = assets['Carro_Piloto'][cor]
@@ -17,30 +17,30 @@ class Piloto(pygame.sprite.Sprite):
         self.speedx = 0
         self.groups = groups
         self.assets = assets
-        # Shaking attributes
+        
         self.is_shaking = False
         self.shake_timer = 0
-        self.shake_duration = 2500  # Matches tempo_sem_c
+        self.shake_duration = 2500 
         self.shake_offset_x = 0
         self.shake_offset_y = 0
-        self.shake_intensity = 5  # Max pixel offset for shake
+        self.shake_intensity = 5  
 
     def start_shake(self):
-        """Start the shaking effect."""
+       
         self.is_shaking = True
         self.shake_timer = pygame.time.get_ticks()
 
     def update(self):
-        # Update position based on speed
+        
         self.rect.x += self.speedx
 
-        # Keep within screen bounds
+        
         if self.rect.right > WIDTH:
             self.rect.right = WIDTH
         if self.rect.left < 0:
             self.rect.left = 0
 
-        # Handle shaking
+       
         if self.is_shaking:
             now = pygame.time.get_ticks()
             if now - self.shake_timer > self.shake_duration:
@@ -86,7 +86,7 @@ class Carro(pygame.sprite.Sprite):
         self.rect.x += self.speedx
         self.rect.y += self.speedy
 
-        # Interpolate x-position
+        
         if self.inicio_y <= self.rect.y <= self.fim_y + 15:
             proporcao = (self.rect.y - self.inicio_y) / (self.fim_y - self.inicio_y)
             self.rect.centerx = self.inicio_x + (self.fim_x - self.inicio_x) * proporcao
@@ -94,18 +94,18 @@ class Carro(pygame.sprite.Sprite):
         else:
             scale = self.escala_min
 
-        # Apply scaling
+      
         new_width = int(self.base_width * scale)
         new_height = int(self.base_height * scale)
         self.image = pygame.transform.scale(self.original_image, (new_width, new_height))
         self.mask = pygame.mask.from_surface(self.image)
 
-        # Update rect, keeping center
+      
         center = self.rect.center
         self.rect = self.image.get_rect()
         self.rect.center = center
 
-        # Reset if off-screen
+       
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
             self.kill()
 

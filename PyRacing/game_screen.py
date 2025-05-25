@@ -5,8 +5,9 @@ import random
 from classes import *
 from assets import load_assets
 from funcoes import *
+from janela import *
 
-def game_screen(window):
+def game_screen(window, cor):  
     assets = load_assets()
     clock = pygame.time.Clock()
     grass = assets[grama][0]
@@ -27,10 +28,10 @@ def game_screen(window):
     groups['background'] = pista
     groups['all_arvores'] = all_arvores
 
-    player = Piloto(groups, assets)
+    player = Piloto(groups, assets, cor)  
     all_sprites.add(player)
 
-    # Initial track sprites
+
     left = Esquerda(assets)
     right = Direita(assets)
     all_sprites.add(left, right)
@@ -51,7 +52,7 @@ def game_screen(window):
     explosion_tick = 0
     explosion_duration = 850
     last_vida_spawn = pygame.time.get_ticks()
-    vida_spawn_interval = random.randint(10000, 30000)  # 10-30 seconds
+    vida_spawn_interval = random.randint(10000, 30000)  
     faixa_spawn_interval = 250
     last_faixa_spawn = pygame.time.get_ticks()
     last_enemy_spawn = pygame.time.get_ticks()
@@ -79,7 +80,7 @@ def game_screen(window):
     controle = True
     esta_transicionando = False
     inicio_transicao = 0
-    duracao_transicao = 3000  # 3 seconds
+    duracao_transicao = 3000 
     proximo_momento = None
     proximo_ceu = None
     proxima_grama = None
@@ -120,9 +121,7 @@ def game_screen(window):
                 score += 100
                 ultimo_incremento = now
 
-
             if not esta_transicionando and now - hora > horarios[momento]:
-                # Start transition
                 esta_transicionando = True
                 inicio_transicao = now
                 if momento == dia:
@@ -145,7 +144,6 @@ def game_screen(window):
             if esta_transicionando:
                 passado = now - inicio_transicao
                 if passado >= duracao_transicao:
-                    # End transition
                     momento = proximo_momento
                     sky = proximo_ceu
                     grass = proxima_grama
@@ -157,7 +155,6 @@ def game_screen(window):
                     proximo_ceu = None
                     proxima_grama = None
 
-            # Spawn faixas periodically
             if now - last_faixa_spawn > faixa_spawn_interval:
                 left = Esquerda(assets)
                 right = Direita(assets)
@@ -166,7 +163,6 @@ def game_screen(window):
                 all_sprites.add(left, right)
                 all_faixas.add(left, right)
                 last_faixa_spawn = now
-            # Spawn vida periodically
             if now - last_vida_spawn > vida_spawn_interval:
                 vida = Vida(assets)
                 vida.speedy += score // 250
@@ -181,7 +177,6 @@ def game_screen(window):
                 all_enemies.add(enemy)
                 last_enemy_spawn = now
                 enemy_spawn_interval = random.randint(1000, 2000)
-            # Enemy collisions
             if now - oleo_spawn > oleo_spawn_interval:
                 oil = Oleo(assets)
                 oil.speedy += score // 250
@@ -189,7 +184,6 @@ def game_screen(window):
                 all_oil.add(oil)
                 oleo_spawn = now
                 oleo_spawn_interval = random.randint(5000, 50000)
-
             if now - arvoree_spawn > arvoree_spawn_interval:
                 arvoree = ArvoreE(assets)
                 arvoree.speedy += score // 250
@@ -235,7 +229,7 @@ def game_screen(window):
             for oil in oil_hits:
                 controle = False
                 assets[oleo_som].play()
-                player.start_shake()  # Trigger shaking
+                player.start_shake()
                 s_controle = pygame.time.get_ticks()
             if not controle and now - s_controle > tempo_sem_c:
                 controle = True
@@ -269,7 +263,6 @@ def game_screen(window):
         window.fill(BLACK)
         if esta_transicionando and proximo_ceu is not None:
             fade(window, sky, proximo_ceu, (0, 0), duracao_transicao, passado)
-            # Only fade grass if transitioning to a different grass asset
             if proxima_grama is not None and proxima_grama != grass:
                 fade(window, grass, proxima_grama, (0, HEIGHT/2), duracao_transicao, passado)
             else:
@@ -278,9 +271,12 @@ def game_screen(window):
             window.blit(sky, (0, 0))
             window.blit(grass, (0, HEIGHT/2))
         window.blit(pista, (75, HEIGHT/2))
-        all_sprites.draw(window)
+   
+        for sprite in all_sprites:
+            if sprite != player:
+                window.blit(sprite.image, sprite.rect)
         if state == PLAYING:
-            # Apply shake offset when rendering player
+    
             window.blit(player.image, (player.rect.x + player.shake_offset_x, player.rect.y + player.shake_offset_y))
         for i in range(lives):
             window.blit(assets[vida2], (10 + i * 60, 10))
