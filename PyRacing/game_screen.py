@@ -89,7 +89,7 @@ def game_screen(window):
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                state = DONE
+                state = QUIT
             if state == PLAYING:
                 if controle == True:
                     if event.type == pygame.KEYDOWN:
@@ -264,7 +264,7 @@ def game_screen(window):
         elif state == EXPLODING:
             now = pygame.time.get_ticks()
             if now - explosion_tick > explosion_duration:
-                return DONE
+                return GAME_OVER
 
         window.fill(BLACK)
         if esta_transicionando and proximo_ceu is not None:

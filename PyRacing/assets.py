@@ -18,6 +18,7 @@ pista = 'pista'
 musica = 'musica'
 explosao_som = 'explosao_som'
 fonte = 'fonte'
+fonte2 = 'fonte2'
 vida_som = 'vida_som'
 oleo_som = 'oleo_som'
 def load_assets():
@@ -77,4 +78,5 @@ def load_assets():
         explosion_anim.append(img)
     assets[explosao] = explosion_anim 
     assets[fonte] = pygame.font.Font(('files/font/PressStart2P.ttf'), 48)
+    assets[fonte2] = pygame.font.Font(('files/font/PressStart2P.ttf'), 24)
     return assets

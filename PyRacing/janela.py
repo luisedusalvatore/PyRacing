@@ -30,38 +30,22 @@ def start(window):
 
     return state
 def game_over(window):
-    # ----- Gera tela principal
-    window = pygame.display.set_mode((WIDTH,HEIGHT))
-    pygame.display.set_caption('Py Racing')
-    pygame.display.update()
+    assets = load_assets()
+    font = assets[fonte]
+    font2 = assets[fonte2]
+    game_over_text = font.render("GAME OVER", True, RED)
+    game_over_text2 = font2.render("Aperte qualquer tecla para voltar a jogar", True, RED)
+    text_rect = game_over_text.get_rect(center=(WIDTH / 2, HEIGHT / 2 - 20))
+    text_rect2 = game_over_text2.get_rect(center=(WIDTH / 2, HEIGHT / 2 + 20))
     running = True
     while running:
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                state = QUIT
-                running = False
+                return QUIT
+            if event.type == pygame.KEYUP:
+                return GAME  # Go back to game screen
         window.fill(BLACK)
-
-        # Depois de desenhar tudo, inverte o display.
-        pygame.display.flip
-
-    return state
-def janela(window):
-    # ----- Gera tela principal
-    window = pygame.display.set_mode((WIDTH,HEIGHT))
-    pygame.display.set_caption('Py Racing')
-    pygame.display.update()
-    running = True
-    while running:
-        clock.tick(FPS)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                state = QUIT
-                running = False
-        window.fill(BLACK)
-
-        # Depois de desenhar tudo, inverte o display.
-        pygame.display.flip
-
-    return state
+        window.blit(game_over_text, text_rect)  # Draw first text
+        window.blit(game_over_text2, text_rect2)  # Draw second text
+        pygame.display.flip()
