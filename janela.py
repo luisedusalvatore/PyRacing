@@ -52,7 +52,7 @@ def start(window):
 
         pygame.display.flip()
 
-    return GAME, cor  # Always return tuple
+    return GAME, cor 
 
 def game_over(window):
     assets = load_assets()
