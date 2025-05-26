@@ -99,8 +99,8 @@ def load_assets():
 
      # Efeitos sonoros
     assets[explosao_som] = pygame.mixer.Sound('files/music/explosao.wav') # Criado por Prof.Mudkip
-    assets[vida_som] = pygame.mixer.Sound('files/music/vida_up.mp3')
-    assets[oleo_som] = pygame.mixer.Sound('files/music/escorregar.mp3')
+    assets[vida_som] = pygame.mixer.Sound('files/music/vida_up.mp3') # Criado por SomeGuy22 (Freesound)
+    assets[oleo_som] = pygame.mixer.Sound('files/music/escorregar.mp3') # Criado por SoudDino
 
      # Animação de explosão
     explosion_anim = []  # Imagens da explosão geradas por IA
