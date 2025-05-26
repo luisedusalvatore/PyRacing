@@ -5,7 +5,7 @@ import os
 # Constantes que servem como chaves para os ativos (imagens, sons, fontes)
 fundo = 'fundo'
 explosao = 'explosao'
-home = 'home'
+
 vida = 'vida'
 vida2 = 'vida2'
 esquerda = 'esquerda'
@@ -55,7 +55,6 @@ def load_assets():
 
     # Outros fundos e telas
     assets[fundo] = pygame.transform.scale(pygame.image.load('files/img/main_field.png').convert(), (WIDTH, HEIGHT))
-    assets[home] = pygame.transform.scale(pygame.image.load('files/img/home.png').convert(), (WIDTH, HEIGHT))
     assets[escolha] = pygame.transform.scale(pygame.image.load('files/img/escolha_carro.jpg').convert_alpha(), (WIDTH, HEIGHT))
 
     # Carros controlados pelo jogador
@@ -92,7 +91,6 @@ def load_assets():
         pygame.transform.scale(pygame.image.load('files/img/Nuvem3.png').convert_alpha(),(WIDTH_NUVEM, HEIGHT_NUVEM))
     ]
     assets[oleo] = pygame.transform.scale(pygame.image.load('files/img/oleo.png').convert_alpha(),(WIDTH_OLEO, HEIGHT_OLEO))
-    assets[pista] = pygame.transform.scale(pygame.image.load('files/img/Pista.png').convert_alpha(),(800, 100))
     
       # Música de fundo
     assets[musica] = pygame.mixer.music.load('files/music/musica.mp3') # Musica criada por Emmraan
