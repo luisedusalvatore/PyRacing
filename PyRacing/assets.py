@@ -81,6 +81,7 @@ def load_assets():
     assets[direita] = pygame.transform.scale(pygame.image.load('files/img/pista_direita.png').convert_alpha(), (WIDTH_FAIXA, HEIGHT_FAIXA))
 
     assets[arvore] = [
+        pygame.transform.scale(pygame.image.load('files/img/Arvore1.png').convert_alpha(),(WIDTH_ARVORE, HEIGHT_ARVORE)),
         pygame.transform.scale(pygame.image.load('files/img/arvore.png').convert_alpha(),(WIDTH_ARVORE, HEIGHT_ARVORE)),
         pygame.transform.scale(pygame.image.load('files/img/arvore2.png').convert_alpha(),(WIDTH_ARVORE, HEIGHT_ARVORE)),
         pygame.transform.scale(pygame.image.load('files/img/arvore3.png').convert_alpha(),(WIDTH_ARVORE, HEIGHT_ARVORE))
