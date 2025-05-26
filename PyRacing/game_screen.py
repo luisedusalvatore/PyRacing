@@ -64,8 +64,7 @@ def game_screen(window, cor):
     por_do_sol = 'por do sol'
     nascer_do_sol = 'nascer do sol'
     noite = 'noite'
-    # Dicionário para controle de teclas pressionadas
-    keysdown = {}
+
     # Pontuação inicial
     score = 0
     # Vidas iniciais do jogador
