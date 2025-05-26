@@ -14,7 +14,7 @@ def start(window):
     instructions_rect = instructions.get_rect(center=(WIDTH/2, HEIGHT/2))
 
     running = True
-    estado = 'initial'  # Match case used in conditions
+    estado = 'initial'
     cor = None
 
     while running:
