@@ -46,3 +46,4 @@ Para que o jogo funcione, é necessário importar todas as bibliotecas mencionad
 * Pista gerada por IA, aperfeicoado pelo estudante Luis com o programa GIMP
 * Foto do Dia gerada por IA e edidata pelo aluno Pedro
 * Equacao do sistema de escalonamento
+* Sistema de Fade
