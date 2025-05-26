@@ -1,11 +1,13 @@
 import pygame
-from configuracoes import *
+from configuracoes import *  # Importa configurações globais (como WIDTH, HEIGHT, etc.)
 import os
+
+# Constantes que servem como chaves para os ativos (imagens, sons, fontes)
 fundo = 'fundo'
 explosao = 'explosao'
 home = 'home'
 vida = 'vida'
-vida2  = 'vida2'
+vida2 = 'vida2'
 esquerda = 'esquerda'
 direita = 'direita'
 oleo = 'oleo'
@@ -22,43 +24,62 @@ fonte2 = 'fonte2'
 vida_som = 'vida_som'
 oleo_som = 'oleo_som'
 escolha = 'escolha'
+
 def load_assets():
+    """
+    Carrega todos os recursos visuais e sonoros do jogo e retorna um dicionário com esses ativos.
+
+    Retorna:
+        dict: Dicionário contendo imagens, sons e fontes utilizados no jogo.
+    """
     assets = {}
-    assets[estrada] = pygame.transform.scale(pygame.image.load('files/img/estrada.png').convert_alpha(), (WIDTH-200, HEIGHT/2))
-    assets[ceu] =  [
-        pygame.transform.scale(pygame.image.load('files/img/Ceu_azul.png').convert(),(WIDTH, HEIGHT/2)),
-        pygame.transform.scale(pygame.image.load('files/img/Por_do_Sol.png').convert(),(WIDTH, HEIGHT/2)),
-        pygame.transform.scale(pygame.image.load('files/img/Noite.png').convert(),(WIDTH, HEIGHT/2))
-                    ]        
-    assets[grama] =  [
-        pygame.transform.scale(pygame.image.load('files/img/Grama_Dia.png').convert(),(WIDTH,HEIGHT/2)),
-        pygame.transform.scale(pygame.image.load('files/img/Grama_noite.png').convert(),(WIDTH, HEIGHT/2))
-        ]
-    assets[fundo] = pygame.transform.scale(pygame.image.load('files/img/main_field.png').convert(),(WIDTH,HEIGHT))
-    assets[home] = pygame.transform.scale(pygame.image.load('files/img/home.png').convert(),(WIDTH,HEIGHT))
+
+    # Imagens principais
+    assets[estrada] = pygame.transform.scale(
+        pygame.image.load('files/img/estrada.png').convert_alpha(),
+        (WIDTH - 200, HEIGHT / 2)
+    )
+
+    # Imagens de diferentes céus para variações de tempo ou turno
+    assets[ceu] = [
+        pygame.transform.scale(pygame.image.load('files/img/Ceu_azul.png').convert(), (WIDTH, HEIGHT / 2)),
+        pygame.transform.scale(pygame.image.load('files/img/Por_do_Sol.png').convert(), (WIDTH, HEIGHT / 2)),
+        pygame.transform.scale(pygame.image.load('files/img/Noite.png').convert(), (WIDTH, HEIGHT / 2))
+    ]
+
+    # Imagens de grama para o ambiente
+    assets[grama] = [
+        pygame.transform.scale(pygame.image.load('files/img/Grama_Dia.png').convert(), (WIDTH, HEIGHT / 2)),
+        pygame.transform.scale(pygame.image.load('files/img/Grama_noite.png').convert(), (WIDTH, HEIGHT / 2))
+    ]
+
+    # Outros fundos e telas
+    assets[fundo] = pygame.transform.scale(pygame.image.load('files/img/main_field.png').convert(), (WIDTH, HEIGHT))
+    assets[home] = pygame.transform.scale(pygame.image.load('files/img/home.png').convert(), (WIDTH, HEIGHT))
+    assets[escolha] = pygame.transform.scale(pygame.image.load('files/img/escolha_carro.jpg').convert_alpha(), (WIDTH, HEIGHT))
+
+    # Carros controlados pelo jogador
     assets['Carro_Piloto'] = [
-        pygame.transform.scale( pygame.image.load('files/img/piloto.png').convert_alpha(), (WIDTH_PILOT,HEIGHT_PILOT)),
-        pygame.transform.scale( pygame.image.load('files/img/azul.png').convert_alpha(), (WIDTH_PILOT,HEIGHT_PILOT)),
-        pygame.transform.scale( pygame.image.load('files/img/roxo.png').convert_alpha(), (WIDTH_PILOT,HEIGHT_PILOT)),
-        pygame.transform.scale( pygame.image.load('files/img/verde.png').convert_alpha(), (WIDTH_PILOT,HEIGHT_PILOT))
-                              ]
+        pygame.transform.scale(pygame.image.load('files/img/piloto.png').convert_alpha(), (WIDTH_PILOT, HEIGHT_PILOT)),
+        pygame.transform.scale(pygame.image.load('files/img/azul.png').convert_alpha(), (WIDTH_PILOT, HEIGHT_PILOT)),
+        pygame.transform.scale(pygame.image.load('files/img/roxo.png').convert_alpha(), (WIDTH_PILOT, HEIGHT_PILOT)),
+        pygame.transform.scale(pygame.image.load('files/img/verde.png').convert_alpha(), (WIDTH_PILOT, HEIGHT_PILOT))
+    ]
+
+    # Carros inimigos com variações
     assets['inimigo'] = [
-        pygame.transform.scale( pygame.image.load('files/img/inimigo.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
-        pygame.transform.scale( pygame.image.load('files/img/Fusca.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
-        pygame.transform.scale( pygame.image.load('files/img/uno.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
-        pygame.transform.scale( pygame.image.load('files/img/caminhao.png').convert_alpha(), (WIDTH_CAMINHAO,HEIGHT_CAMINHAO)),
-        pygame.transform.scale( pygame.image.load('files/img/caminhao_amarelo.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
-        pygame.transform.scale( pygame.image.load('files/img/kwid_creme.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
-        pygame.transform.scale( pygame.image.load('files/img/fusca_verde.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
-        pygame.transform.scale( pygame.image.load('files/img/fusca_vermelho.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
-        pygame.transform.scale( pygame.image.load('files/img/renegade_amarelo.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR)),
-        pygame.transform.scale( pygame.image.load('files/img/renegade_rosa.png').convert_alpha(), (WIDTH_CAR,HEIGHT_CAR))
-                         ]
-    assets[vida] = pygame.transform.scale(pygame.image.load('files/img/vida.png').convert_alpha(),(WIDTH_VIDA, HEIGHT_VIDA))
-    assets[vida2] = pygame.transform.scale(pygame.image.load('files/img/vida.png').convert_alpha(),(WIDTH_VIDA, HEIGHT_VIDA))
-    assets[esquerda] = pygame.transform.scale(pygame.image.load('files/img/pista_esquerda.png').convert_alpha(),(WIDTH_FAIXA, HEIGHT_FAIXA))
-    assets[escolha] = pygame.transform.scale(pygame.image.load('files/img/escolha_carro.jpg').convert_alpha(),(WIDTH, HEIGHT))
-    assets[direita] = pygame.transform.scale(pygame.image.load('files/img/pista_direita.png').convert_alpha(),(WIDTH_FAIXA, HEIGHT_FAIXA))
+        pygame.transform.scale(pygame.image.load(f'files/img/{nome}.png').convert_alpha(), (WIDTH_CAR, HEIGHT_CAR))
+        for nome in ['inimigo', 'Fusca', 'uno', 'caminhao_amarelo', 'kwid_creme', 'fusca_verde', 'fusca_vermelho', 'renegade_amarelo', 'renegade_rosa']
+    ] + [
+        pygame.transform.scale(pygame.image.load('files/img/caminhao.png').convert_alpha(), (WIDTH_CAMINHAO, HEIGHT_CAMINHAO))
+    ]
+
+    # Vida, obstáculos e elementos de cenário
+    assets[vida] = pygame.transform.scale(pygame.image.load('files/img/vida.png').convert_alpha(), (WIDTH_VIDA, HEIGHT_VIDA))
+    assets[vida2] = pygame.transform.scale(pygame.image.load('files/img/vida.png').convert_alpha(), (WIDTH_VIDA, HEIGHT_VIDA))
+    assets[esquerda] = pygame.transform.scale(pygame.image.load('files/img/pista_esquerda.png').convert_alpha(), (WIDTH_FAIXA, HEIGHT_FAIXA))
+    assets[direita] = pygame.transform.scale(pygame.image.load('files/img/pista_direita.png').convert_alpha(), (WIDTH_FAIXA, HEIGHT_FAIXA))
+
     assets[arvore] = [
         pygame.transform.scale(pygame.image.load('files/img/arvore.png').convert_alpha(),(WIDTH_ARVORE, HEIGHT_ARVORE)),
         pygame.transform.scale(pygame.image.load('files/img/arvore2.png').convert_alpha(),(WIDTH_ARVORE, HEIGHT_ARVORE)),
@@ -71,12 +92,19 @@ def load_assets():
     ]
     assets[oleo] = pygame.transform.scale(pygame.image.load('files/img/oleo.png').convert_alpha(),(WIDTH_OLEO, HEIGHT_OLEO))
     assets[pista] = pygame.transform.scale(pygame.image.load('files/img/Pista.png').convert_alpha(),(800, 100))
+    
+      # Música de fundo
     assets[musica] = pygame.mixer.music.load('files/music/musica.mp3')
     pygame.mixer.music.set_volume(0.4)
-    explosion_anim = []
+    
+
+     # Efeitos sonoros
     assets[explosao_som] = pygame.mixer.Sound('files/music/explosao.wav')
     assets[vida_som] = pygame.mixer.Sound('files/music/vida_up.mp3')
     assets[oleo_som] = pygame.mixer.Sound('files/music/escorregar.mp3')
+
+     # Animação de explosão
+    explosion_anim = []
     for i in range(9):
          #Os arquivos de animação são numerados de 00 a 08   
         filename = os.path.join(IMG_DIR, 'pixel_art_explosion_0{}.png'.format(i))
@@ -84,6 +112,7 @@ def load_assets():
         img = pygame.transform.scale(img, (WIDTH_CAR, HEIGHT_CAR))
         explosion_anim.append(img)
     assets[explosao] = explosion_anim 
+    # Fontes usadas no jogo
     assets[fonte] = pygame.font.Font(('files/font/PressStart2P.ttf'), 48)
     assets[fonte2] = pygame.font.Font(('files/font/PressStart2P.ttf'), 24)
     return assets
