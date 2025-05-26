@@ -40,6 +40,13 @@ Para que o jogo funcione, é necessário importar todas as bibliotecas mencionad
 * json
 * math
 
+# Céditos
+
+*  Música criada por Emmraan
+* Som da explosão criado por 
+* Som do vida SomeGuy22 (Freesound)
+* Som do óleo criada por SoundDino
+
 # Conteúdo Gerado por IA
 
 * A maioria das fotos ultilizadas
