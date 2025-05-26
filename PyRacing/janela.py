@@ -7,10 +7,11 @@ def start(window):
     assets = load_assets()
     background_initial = assets['fundo']
     background_escolha = assets['escolha']
-    font = pygame.font.SysFont(None, 48)
+    font = assets[fonte]
+    font2 = assets[fonte2]
     title = font.render('PyRacing', True, WHITE)
     title_rect = title.get_rect(center=(WIDTH/2, HEIGHT/3))
-    instructions = font.render('Press Any Key to Start', True, WHITE)
+    instructions = font2.render('Press Any Key to Start', True, WHITE)
     instructions_rect = instructions.get_rect(center=(WIDTH/2, HEIGHT/2))
 
     running = True
