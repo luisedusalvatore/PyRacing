@@ -466,5 +466,5 @@ class Nuvem(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.x += self.speedx
-        if self.rect.left > WIDTH:  # Kill when fully off-screen right
+        if self.rect.left > WIDTH: 
             self.kill()

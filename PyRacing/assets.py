@@ -42,15 +42,15 @@ def load_assets():
 
     # Imagens de diferentes céus para variações de tempo ou turno
     assets[ceu] = [
-        pygame.transform.scale(pygame.image.load('files/img/Ceu_azul.png').convert(), (WIDTH, HEIGHT / 2)),
-        pygame.transform.scale(pygame.image.load('files/img/Por_do_Sol.png').convert(), (WIDTH, HEIGHT / 2)),
-        pygame.transform.scale(pygame.image.load('files/img/Noite.png').convert(), (WIDTH, HEIGHT / 2))
+        pygame.transform.scale(pygame.image.load('files/img/Ceu_azul.png').convert(), (WIDTH, HEIGHT / 2)), # Imagem parcialmente gerada por IA
+        pygame.transform.scale(pygame.image.load('files/img/Por_do_Sol.png').convert(), (WIDTH, HEIGHT / 2)), # Imagem gerada por IA
+        pygame.transform.scale(pygame.image.load('files/img/Noite.png').convert(), (WIDTH, HEIGHT / 2)) # Imagem gerada por IA
     ]
 
     # Imagens de grama para o ambiente
     assets[grama] = [
-        pygame.transform.scale(pygame.image.load('files/img/Grama_Dia.png').convert(), (WIDTH, HEIGHT / 2)),
-        pygame.transform.scale(pygame.image.load('files/img/Grama_noite.png').convert(), (WIDTH, HEIGHT / 2))
+        pygame.transform.scale(pygame.image.load('files/img/Grama_Dia.png').convert(), (WIDTH, HEIGHT / 2)), # Imagem gerada por IA
+        pygame.transform.scale(pygame.image.load('files/img/Grama_noite.png').convert(), (WIDTH, HEIGHT / 2)) # Imagem gerada por IA
     ]
 
     # Outros fundos e telas
@@ -95,17 +95,17 @@ def load_assets():
     assets[pista] = pygame.transform.scale(pygame.image.load('files/img/Pista.png').convert_alpha(),(800, 100))
     
       # Música de fundo
-    assets[musica] = pygame.mixer.music.load('files/music/musica.mp3')
+    assets[musica] = pygame.mixer.music.load('files/music/musica.mp3') # Musica criada por Emmraan
     pygame.mixer.music.set_volume(0.4)
     
 
      # Efeitos sonoros
-    assets[explosao_som] = pygame.mixer.Sound('files/music/explosao.wav')
+    assets[explosao_som] = pygame.mixer.Sound('files/music/explosao.wav') # Criado por Prof.Mudkip
     assets[vida_som] = pygame.mixer.Sound('files/music/vida_up.mp3')
     assets[oleo_som] = pygame.mixer.Sound('files/music/escorregar.mp3')
 
      # Animação de explosão
-    explosion_anim = []
+    explosion_anim = []  # Imagens da explosão geradas por IA
     for i in range(9):
          #Os arquivos de animação são numerados de 00 a 08   
         filename = os.path.join(IMG_DIR, 'pixel_art_explosion_0{}.png'.format(i))
