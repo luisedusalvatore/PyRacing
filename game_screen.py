@@ -1,6 +1,5 @@
 import pygame
 from configuracoes import *
-import os
 import random
 from classes import *
 from assets import load_assets
@@ -15,17 +14,17 @@ def game_screen(window, cor):
         cor (int): Índice da cor do carro do jogador (0 a 3).
 
     Returns:
-        int: Estado do jogo (QUIT, GAME_OVER ou DONE).
+        tuple: Estado do jogo (QUIT, GAME_OVER ou DONE) e a pontuação do jogador (int).
     """
     # Carrega os assets do jogo
     assets = load_assets()
     # Inicializa o relógio para controlar o FPS
     clock = pygame.time.Clock()
     # Define as imagens de fundo (grama e céu)
-    grass = assets[grama][0]
-    sky = assets[ceu][0]
+    grass = assets['grama'][0]
+    sky = assets['ceu'][0]
     # Define a imagem da pista
-    pista = assets[estrada]
+    pista = assets['estrada']
     # Grupos de sprites para gerenciar objetos do jogo
     all_sprites = pygame.sprite.Group()
     all_enemies = pygame.sprite.Group()
@@ -148,45 +147,45 @@ def game_screen(window, cor):
         for event in pygame.event.get():
             # Fecha o jogo ao clicar no botão de fechar
             if event.type == pygame.QUIT:
-                return QUIT
+                return QUIT, score
             # Se o jogo está no estado PLAYING
             if state == PLAYING:
                 # Controle normal do carro
-                if controle == True:
+                if controle:
                     if event.type == pygame.KEYDOWN:
                         # Move o carro para a esquerda
-                        if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                        if event.key in (pygame.K_LEFT, pygame.K_a):
                             player.speedx -= 12
                         # Move o carro para a direita
-                        if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                        if event.key in (pygame.K_RIGHT, pygame.K_d):
                             player.speedx += 12
                     if event.type == pygame.KEYUP:
                         # Para o movimento horizontal ao soltar a tecla
-                        if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                        if event.key in (pygame.K_LEFT, pygame.K_a):
                             player.speedx = 0
-                        if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                        if event.key in (pygame.K_RIGHT, pygame.K_d):
                             player.speedx = 0
                 # Controle invertido (após colisão com óleo)
                 else:
                     if event.type == pygame.KEYDOWN:
                         # Inverte o movimento para a esquerda
-                        if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                        if event.key in (pygame.K_LEFT, pygame.K_a):
                             player.speedx += 12
                         # Inverte o movimento para a direita
-                        if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                        if event.key in (pygame.K_RIGHT, pygame.K_d):
                             player.speedx -= 12
                     if event.type == pygame.KEYUP:
-                        # Para o movimento horizontal ao soltar a tecla
-                        if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                        # Para o movimento horizontal ao soltar
+                        if event.key in (pygame.K_LEFT, pygame.K_a):
                             player.speedx = 0
-                        if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                        if event.key in (pygame.K_RIGHT, pygame.K_d):
                             player.speedx = 0
 
         # Lógica do jogo no estado PLAYING
         if state == PLAYING:
             now = pygame.time.get_ticks()
-            # Incrementa a pontuação a cada 10 segundos
-            if now - ultimo_incremento >= 10000:
+            # Incrementa a pontuação a cada 20 segundos
+            if now - ultimo_incremento >= 20000:
                 score += 100
                 ultimo_incremento = now
 
@@ -194,23 +193,23 @@ def game_screen(window, cor):
             if not esta_transicionando and now - hora > horarios[momento]:
                 esta_transicionando = True
                 inicio_transicao = now
-                # Define o próximo momento e assets para transição
-                if momento == dia:
+                # Define o próximo momento e assets
+                if momento == 'dia':
                     proximo_momento = por_do_sol
-                    proximo_ceu = assets[ceu][1]
-                    proxima_grama = assets[grama][0]
+                    proximo_ceu = assets['ceu'][1]
+                    proxima_grama = assets['grama'][0]
                 elif momento == por_do_sol:
                     proximo_momento = noite
-                    proximo_ceu = assets[ceu][2]
-                    proxima_grama = assets[grama][1]
+                    proximo_ceu = assets['ceu'][2]
+                    proxima_grama = assets['grama'][1]
                 elif momento == noite:
                     proximo_momento = nascer_do_sol
-                    proximo_ceu = assets[ceu][1]
-                    proxima_grama = assets[grama][0]
+                    proximo_ceu = assets['ceu'][1]
+                    proxima_grama = assets['grama'][0]
                 elif momento == nascer_do_sol:
                     proximo_momento = dia
-                    proximo_ceu = assets[ceu][0]
-                    proxima_grama = assets[grama][0]
+                    proximo_ceu = assets['ceu'][0]
+                    proxima_grama = assets['grama'][0]
 
             # Gerencia a transição de ciclo
             if esta_transicionando:
@@ -221,18 +220,17 @@ def game_screen(window, cor):
                     grass = proxima_grama
                     hora = now
                     esta_transicionando = False
-                    # Bônus de pontuação ao completar o ciclo diurno
+                    # Bônus de pontuação
                     if momento == dia:
                         score += 1000
                     proximo_momento = None
                     proximo_ceu = None
                     proxima_grama = None
 
-            # Spawna novas faixas laterais
+            # Spawna novas faixas
             if now - last_faixa_spawn > faixa_spawn_interval:
                 left = Esquerda(assets)
                 right = Direita(assets)
-                # Aumenta a velocidade com base na pontuação
                 right.speedy += score // 250
                 left.speedy += score // 250
                 all_sprites.add(left, right)
@@ -291,7 +289,7 @@ def game_screen(window, cor):
                 explosao = Explosion(hit.rect.center, assets)
                 all_sprites.add(explosao)
                 if lives > 0:
-                    assets[explosao_som].play()
+                    assets['explosao_som'].play()
                 lives -= 1
                 if lives == 0:
                     explosao = Explosion(player.rect.center, assets)
@@ -304,35 +302,34 @@ def game_screen(window, cor):
             vida_hits = pygame.sprite.spritecollide(player, all_vidas, True, pygame.sprite.collide_mask)
             for vida in vida_hits:
                 score += 100
-                assets[vida_som].play()
-                if lives <= max_lives:
+                assets['vida_som'].play()
+                if lives < max_lives:
                     lives += 1
-                    assets[vida_som].play()
+                    assets['vida_som'].play()
 
             # Verifica colisões com óleo
             oil_hits = pygame.sprite.spritecollide(player, all_oil, True, pygame.sprite.collide_mask)
             for oil in oil_hits:
                 controle = False
-                assets[oleo_som].play()
+                assets['oleo_som'].play()
                 player.start_shake()
                 s_controle = pygame.time.get_ticks()
-            # Restaura o controle normal após o tempo definido
             if not controle and now - s_controle > tempo_sem_c:
                 controle = True
 
             # Verifica colisões com árvores
             arvore_hits = pygame.sprite.spritecollide(player, all_arvores, False, pygame.sprite.collide_mask)
             for arvore in arvore_hits:
-                assets[explosao_som].play()
+                assets['explosao_som'].play()
                 explosao = Explosion(player.rect.center, assets)
                 all_sprites.add(explosao)
                 player.kill()
                 state = EXPLODING
                 explosion_tick = pygame.time.get_ticks()
 
-            # Verifica se o jogador saiu da pista
+            # Verifica saída da pista
             if player.rect.x >= WIDTH - 160 or player.rect.x <= 160:
-                if inicio_fora_pista == None:
+                if inicio_fora_pista is None:
                     inicio_fora_pista = now
                 if now - inicio_fora_pista > delay_fora_pista:
                     lives -= 1
@@ -345,16 +342,21 @@ def game_screen(window, cor):
                         explosion_tick = now
                     else:
                         inicio_fora_pista = None
-        # Gerencia o estado de explosão
         elif state == EXPLODING:
             now = pygame.time.get_ticks()
             if now - explosion_tick > explosion_duration:
-                return GAME_OVER
+                # Atualiza main_score
+                for i in range(len(main_score)):
+                    if score > main_score[i]:
+                        main_score.insert(i, score)
+                        main_score.pop()  # Remove o menor score
+                        break
+                return GAME_OVER, score
 
         # Renderiza a tela
         window.fill(BLACK)
-        # Aplica transição de fundo se necessário
         if esta_transicionando and proximo_ceu is not None:
+            passado = now - inicio_transicao
             fade(window, sky, proximo_ceu, (0, 0), duracao_transicao, passado)
             if proxima_grama is not None and proxima_grama != grass:
                 fade(window, grass, proxima_grama, (0, HEIGHT/2), duracao_transicao, passado)
@@ -365,32 +367,28 @@ def game_screen(window, cor):
             window.blit(grass, (0, HEIGHT/2))
         window.blit(pista, (75, HEIGHT/2))
 
-        # Desenha as faixas primeiro (abaixo de todos)
         for faixa in all_faixas:
             window.blit(faixa.image, faixa.rect)
-        
-        # Desenha os outros sprites, exceto o jogador e as faixas
         for sprite in all_sprites:
             if sprite != player and sprite not in all_faixas:
                 window.blit(sprite.image, sprite.rect)
-        
-        # Desenha o jogador com offset de trepidação, se aplicável
         if state == PLAYING:
             window.blit(player.image, (player.rect.x + player.shake_offset_x, player.rect.y + player.shake_offset_y))
-        
-        # Desenha os ícones de vidas
         for i in range(lives):
-            window.blit(assets[vida2], (10 + i * 60, 10))
+            window.blit(assets['vida2'], (10 + i * 60, 10))
 
-        # Renderiza a pontuação
-        text_surface = assets[fonte].render(str(score), True, YELLOW)
+        text_surface = assets['fonte'].render(str(score), True, YELLOW)
         text_rect = text_surface.get_rect()
         text_rect.topright = (WIDTH - 100, 20)
         window.blit(text_surface, text_rect)
 
-        # Atualiza todos os sprites
         all_sprites.update()
-        # Atualiza a tela
         pygame.display.update()
 
-    return DONE
+    # Atualiza main_score
+    for i in range(len(main_score)):
+        if score > main_score[i]:
+            main_score.insert(i, score)
+            main_score.pop()
+            break
+    return DONE, score

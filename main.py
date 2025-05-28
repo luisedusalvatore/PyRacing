@@ -9,6 +9,7 @@ import random
 from configuracoes import *
 from funcoes import *
 from janela import *
+from assets import *
 from game_screen import *
 
 # Inicializa o Pygame e o mixer de áudio
@@ -24,18 +25,20 @@ pygame.display.set_caption('PyRacing')
 state = INIT
 # Cor do carro do jogador (inicialmente None)
 cor = None
+# Pontuação do jogador (inicialmente 0)
+score = 0
 
 # Loop principal do jogo
 while state != QUIT:
-    # Tela inicial: exibe o menu e permite escolher a cor do carro
+    # Tela inicial
     if state == INIT:
         state, cor = start(window)
-    # Tela do jogo: executa a lógica principal do jogo
+    # Tela do jogo
     elif state == GAME and cor is not None:
-        state = game_screen(window, cor)
-    # Tela de game over: exibe mensagem de fim de jogo
-    else:
-        state = game_over(window)
+        state, score = game_screen(window, cor)
+    # Tela de game over
+    elif state == GAME_OVER:
+        state = game_over(window, score)
 
-# Finaliza o Pygame ao sair do jogo
+# Finaliza o Pygame
 pygame.quit()

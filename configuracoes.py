@@ -67,3 +67,5 @@ INIT = 0        # Estado inicial (tela de início)
 GAME = 1        # Estado de jogo ativo
 QUIT = 2        # Estado de saída do jogo
 GAME_OVER = 3   # Estado de fim de jogo
+
+main_score = [0]*5  # Lista para armazenar pontuações, inicialmente zerada
