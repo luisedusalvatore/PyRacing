@@ -27,7 +27,7 @@ def game_screen(window, cor):
     # Define a imagem da pista
     pista = assets[estrada]
     # Grupos de sprites para gerenciar objetos do jogo
-    all_sprites = pygame.sprite.LayeredUpdates()
+    all_sprites = pygame.sprite.Group()
     all_enemies = pygame.sprite.Group()
     all_vidas = pygame.sprite.Group()
     all_faixas = pygame.sprite.Group()
@@ -166,7 +166,7 @@ def game_screen(window, cor):
                         # Para o movimento horizontal ao soltar a tecla
                         if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                             player.speedx = 0
-                        elif event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                        if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                             player.speedx = 0
                 # Controle invertido (após colisão com óleo)
                 else:
@@ -184,7 +184,7 @@ def game_screen(window, cor):
                         if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                             player.speedx = 0
 
-        # Lógica do jogo no estado de jogo
+        # Lógica do jogo no estado PLAYING
         if state == PLAYING:
             now = pygame.time.get_ticks()
             # Incrementa a pontuação a cada 10 segundos
@@ -231,7 +231,7 @@ def game_screen(window, cor):
                     proxima_grama = None
 
             # Spawna novas faixas laterais
-            if now - last_faixa_spawn >= faixa_spawn_interval:
+            if now - last_faixa_spawn > faixa_spawn_interval:
                 left = Esquerda(assets)
                 right = Direita(assets)
                 # Aumenta a velocidade com base na pontuação
@@ -249,7 +249,7 @@ def game_screen(window, cor):
                 last_vida_spawn = now
                 vida_spawn_interval = random.randint(5000, 15000)
             # Spawna novos inimigos
-            if now - last_enemy_spawn >= enemy_spawn_interval:
+            if now - last_enemy_spawn > enemy_spawn_interval:
                 enemy = Carro(assets)
                 enemy.speedy += score // 250
                 all_sprites.add(enemy)
@@ -257,7 +257,7 @@ def game_screen(window, cor):
                 last_enemy_spawn = now
                 enemy_spawn_interval = random.randint(1000, 2000)
             # Spawna manchas de óleo
-            if now - oleo_spawn >= oleo_spawn_interval:
+            if now - oleo_spawn > oleo_spawn_interval:
                 oil = Oleo(assets)
                 oil.speedy += score // 250
                 all_sprites.add(oil)
@@ -273,7 +273,7 @@ def game_screen(window, cor):
                 arvoree_spawn = now
                 arvoree_spawn_interval = random.randint(1000, 5000)
             # Spawna árvores à direita
-            if now - arvored_spawn >= arvored_spawn_interval:
+            if now - arvored_spawn > arvored_spawn_interval:
                 arvored = ArvoreD(assets)
                 arvored.speedy += score // 250
                 all_sprites.add(arvored)
@@ -284,7 +284,7 @@ def game_screen(window, cor):
             if now - nuvem_spawn > nuvem_spawn_interval:
                 nuvem = Nuvem(assets)
                 all_sprites.add(nuvem)
-                nuvem_spawn.now = now
+                nuvem_spawn = now
                 nuvem_spawn_interval = random.randint(1000, 10000)
 
             # Verifica colisões com inimigos
@@ -306,16 +306,16 @@ def game_screen(window, cor):
             vida_hits = pygame.sprite.spritecollide(player, all_vidas, True, pygame.sprite.collide_mask)
             for vida in vida_hits:
                 score += 100
-                assets[vida].set_som().play()
+                assets[vida_som].play()
                 if lives <= max_lives:
                     lives += 1
-                    assets[vida].set_som().play()
+                    assets[vida_som].play()
 
             # Verifica colisões com óleo
             oil_hits = pygame.sprite.spritecollide(player, all_oil, True, pygame.sprite.collide_mask)
             for oil in oil_hits:
                 controle = False
-                assets[oleo].set_speed().play(oil)
+                assets[oleo_som].play()
                 player.start_shake()
                 s_controle = pygame.time.get_ticks()
             # Restaura o controle normal após o tempo definido
@@ -323,7 +323,7 @@ def game_screen(window, cor):
                 controle = True
 
             # Verifica colisões com árvores
-            arvore_hits = pygame.sprite.spritecollide(player, all_arvores, True)
+            arvore_hits = pygame.sprite.spritecollide(player, all_arvores, False, pygame.sprite.collide_mask)
             for arvore in arvore_hits:
                 assets[explosao_som].play()
                 explosao = Explosion(player.rect.center, assets)
@@ -344,7 +344,7 @@ def game_screen(window, cor):
                         all_sprites.add(explosao)
                         player.kill()
                         state = EXPLODING
-                        explosion_tick = pygame.time.get_ticks()
+                        explosion_tick = now
                     else:
                         inicio_fora_pista = None
         # Gerencia o estado de explosão
@@ -355,11 +355,11 @@ def game_screen(window, cor):
 
         # Renderiza a tela
         window.fill(BLACK)
-        # Aplica a transição de fundo se necessário
-        if esta_transicionando and proximo_ceu != None:
+        # Aplica transição de fundo se necessário
+        if esta_transicionando and proximo_ceu is not None:
             fade(window, sky, proximo_ceu, (0, 0), duracao_transicao, passado)
-            if proxima_grama != None and proxima_grama != grass:
-                fade(window, grass, proxima_grama, (0, HEIGHT/2), duracao_transicao, pasado)
+            if proxima_grama is not None and proxima_grama != grass:
+                fade(window, grass, proxima_grama, (0, HEIGHT/2), duracao_transicao, passado)
             else:
                 window.blit(grass, (0, HEIGHT/2))
         else:
@@ -367,13 +367,13 @@ def game_screen(window, cor):
             window.blit(grass, (0, HEIGHT/2))
         window.blit(pista, (75, HEIGHT/2))
 
-        # Desenha todos os sprites, exceto o jogador, usando camadas
-        all_sprites.draw(window)
-
-        # Desenha o jogador manualmente para aplicar o efeito de trepidação
+        # Desenha todos os sprites, exceto o jogador
+        for sprite in all_sprites:
+            if sprite != player:
+                window.blit(sprite.image, sprite.rect)
+        # Desenha o jogador com offset de trepidação, se aplicável
         if state == PLAYING:
             window.blit(player.image, (player.rect.x + player.shake_offset_x, player.rect.y + player.shake_offset_y))
-
         # Desenha os ícones de vidas
         for i in range(lives):
             window.blit(assets[vida2], (10 + i * 60, 10))

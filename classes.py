@@ -25,8 +25,7 @@ class Piloto(pygame.sprite.Sprite):
     def __init__(self, groups, assets, cor):
         # Inicializa a classe base de sprite do Pygame
         pygame.sprite.Sprite.__init__(self)
-        # Define a camada do jogador (acima de todos)
-        self._layer = 3
+
         # Define a imagem do carro com base na cor escolhida
         self.image = assets['Carro_Piloto'][cor]
         # Cria uma máscara para colisões precisas
@@ -100,8 +99,6 @@ class Carro(pygame.sprite.Sprite):
     def __init__(self, assets):
         # Inicializa a classe base de sprite do Pygame
         pygame.sprite.Sprite.__init__(self)
-        # Define a camada dos carros inimigos (acima das faixas)
-        self._layer = 2
         # Escolhe uma imagem aleatória para o inimigo
         n = random.randint(0, 9)
         self.assets = assets
@@ -129,7 +126,7 @@ class Carro(pygame.sprite.Sprite):
         self.rect.centerx = self.inicio_x
         self.rect.y = self.inicio_y
 
-        # Define velocidades iniciais
+        # Define velocidades inicial
         self.speedy = random.randint(2, 3)
         self.speedx = random.randint(-1, 1)
         # Cria uma máscara para colisões
@@ -142,7 +139,7 @@ class Carro(pygame.sprite.Sprite):
         self.rect.y += self.speedy
 
         # Ajusta a posição e escala com base na perspectiva
-        if self.inicio_y <= self.rect.y <= self.fim_y + 15:
+        if self.inicio_y <= self.rect.y <= self.fim_y + 15: # Equação de escalonamento gerada por IA
             proporcao = (self.rect.y - self.inicio_y) / (self.fim_y - self.inicio_y)
             self.rect.centerx = self.inicio_x + (self.fim_x - self.inicio_x) * proporcao
             scale = self.escala_min + (self.escala_max - self.escala_min) * proporcao
@@ -173,10 +170,8 @@ class Explosion(pygame.sprite.Sprite):
         frame (int): Índice do quadro atual da animação.
     """
     def __init__(self, center, assets):
-        # Inicializa a classe base de sprite
+        # Inicializa a classe base de sprite do Pygame
         pygame.sprite.Sprite.__init__(self)
-        # Define a camada da explosão (mesma camada de outros objetos)
-        self._layer = 1
         # Lista de imagens da animação de explosão
         self.explosao = assets[explosao]
         self.frame = 0
@@ -221,8 +216,7 @@ class Vida(pygame.sprite.Sprite):
     def __init__(self, assets):
         # Inicializa a classe base de sprite do Pygame
         pygame.sprite.Sprite.__init__(self)
-        # Define a camada das vidas (mesma camada de outros objetos)
-        self._layer = 1
+
         self.assets = assets
         self.original_image = assets[vida]
         # Dimensões base do sprite
@@ -255,7 +249,7 @@ class Vida(pygame.sprite.Sprite):
         self.rect.y += self.speedy
 
         # Ajusta a posição e escala com base na perspectiva
-        if self.inicio_y <= self.rect.y <= self.fim_y + 15:
+        if self.inicio_y <= self.rect.y <= self.fim_y + 15: # Equação de escalonamento gerada por IA
             proporcao = (self.rect.y - self.inicio_y) / (self.fim_y - self.inicio_y)
             self.rect.centerx = self.inicio_x + (self.fim_x - self.inicio_x) * proporcao
             scale = self.escala_min + (self.escala_max - self.escala_min) * proporcao
@@ -273,7 +267,7 @@ class Vida(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = center
 
-        # Reposiciona o sprite se sair da tela, preservando o incremento de velocidade
+        # Reposiciona o sprite se sair da tela
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
             new_width = int(self.base_width * self.escala_min)
             new_height = int(self.base_height * self.escala_min)
@@ -282,6 +276,7 @@ class Vida(pygame.sprite.Sprite):
             self.rect.centerx = self.inicio_x
             self.rect.y = self.inicio_y
             self.rect.x = self.inicio_x
+            self.speedy = random.randint(2, 3)
             self.speedx = random.randint(-1, 1)
             self.fim_x = random.randint(40, WIDTH - WIDTH_CAR - 40)
             self.fim_y = HEIGHT
@@ -298,15 +293,14 @@ class Esquerda(pygame.sprite.Sprite):
     def __init__(self, assets):
         # Inicializa a classe base de sprite do Pygame
         pygame.sprite.Sprite.__init__(self)
-        # Define a camada das faixas (abaixo de todos)
-        self._layer = 0
+
         self.assets = assets
         self.original_image = assets[esquerda]
         # Dimensões base do sprite
         self.base_width = WIDTH_FAIXA
         self.base_height = HEIGHT_FAIXA
         # Escala mínima e máxima para efeito de perspectiva
-        self.escala_min = 0.02  # ALTERAÇÃO: Equalizado com carros para teste
+        self.escala_min = 0.2
         self.escala_max = 1.0
         self.inicio_y = HEIGHT / 2
         self.fim_y = HEIGHT
@@ -333,7 +327,7 @@ class Esquerda(pygame.sprite.Sprite):
         self.rect.y += self.speedy
 
         # Ajusta a posição e escala com base na perspectiva
-        if self.inicio_y <= self.rect.y <= self.fim_y + 15:
+        if self.inicio_y <= self.rect.y <= self.fim_y + 15: # Equação de escalonamento gerada por IA
             proporcao = (self.rect.y - self.inicio_y) / (self.fim_y - self.inicio_y)
             self.rect.centerx = self.inicio_x + (self.fim_x - self.inicio_x) * proporcao
             scale = self.escala_min + (self.escala_max - self.escala_min) * proporcao
@@ -366,15 +360,14 @@ class Direita(pygame.sprite.Sprite):
     def __init__(self, assets):
         # Inicializa a classe base de sprite do Pygame
         pygame.sprite.Sprite.__init__(self)
-        # Define a camada das faixas (abaixo de todos)
-        self._layer = 0
+
         self.assets = assets
         self.original_image = assets[direita]
         # Dimensões base do sprite
         self.base_width = WIDTH_FAIXA
         self.base_height = HEIGHT_FAIXA
         # Escala mínima e máxima para efeito de perspectiva
-        self.escala_min = 0.02  # ALTERAÇÃO: Equalizado com carros para teste
+        self.escala_min = 0.2
         self.escala_max = 1.0
         self.inicio_y = HEIGHT / 2
         self.fim_y = HEIGHT
@@ -401,7 +394,7 @@ class Direita(pygame.sprite.Sprite):
         self.rect.y += self.speedy
 
         # Ajusta a posição e escala com base na perspectiva
-        if self.inicio_y <= self.rect.y <= self.fim_y + 15:
+        if self.inicio_y <= self.rect.y <= self.fim_y + 15: # Equação de escalonamento gerada por IA
             proporcao = (self.rect.y - self.inicio_y) / (self.fim_y - self.inicio_y)
             self.rect.centerx = self.inicio_x + (self.fim_x - self.inicio_x) * proporcao
             scale = self.escala_min + (self.escala_max - self.escala_min) * proporcao
@@ -435,8 +428,7 @@ class Oleo(pygame.sprite.Sprite):
     def __init__(self, assets):
         # Inicializa a classe base de sprite do Pygame
         pygame.sprite.Sprite.__init__(self)
-        # Define a camada do óleo (mesma camada de outros objetos)
-        self._layer = 1
+
         self.assets = assets
         self.original_image = assets[oleo]
         # Dimensões base do sprite
@@ -469,7 +461,7 @@ class Oleo(pygame.sprite.Sprite):
         self.rect.y += self.speedy
 
         # Ajusta a posição e escala com base na perspectiva
-        if self.inicio_y <= self.rect.y <= self.fim_y + 15:
+        if self.inicio_y <= self.rect.y <= self.fim_y + 15: # Equação de escalonamento gerada por IA
             proporcao = (self.rect.y - self.inicio_y) / (self.fim_y - self.inicio_y)
             self.rect.centerx = self.inicio_x + (self.fim_x - self.inicio_x) * proporcao
             scale = self.escala_min + (self.escala_max - self.escala_min) * proporcao
@@ -487,7 +479,7 @@ class Oleo(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.center = center
 
-        # Reposiciona o sprite se sair da tela, preservando o incremento de velocidade
+        # Reposiciona o sprite se sair da tela
         if self.rect.top > HEIGHT or self.rect.right < 0 or self.rect.left > WIDTH:
             new_width = int(self.base_width * self.escala_min)
             new_height = int(self.base_height * self.escala_min)
@@ -496,6 +488,7 @@ class Oleo(pygame.sprite.Sprite):
             self.rect.centerx = self.inicio_x
             self.rect.y = self.inicio_y
             self.rect.x = self.inicio_x
+            self.speedy = random.randint(2, 3)
             self.speedx = random.randint(-1, 1)
             self.fim_x = random.randint(40, WIDTH - WIDTH_CAR - 40)
             self.fim_y = HEIGHT
@@ -512,8 +505,6 @@ class ArvoreE(pygame.sprite.Sprite):
     def __init__(self, assets):
         # Inicializa a classe base de sprite do Pygame
         pygame.sprite.Sprite.__init__(self)
-        # Define a camada das árvores (mesma camada de outros objetos)
-        self._layer = 1
         # Escolhe uma imagem aleatória para a árvore
         n = random.randint(0, 2)
         self.assets = assets
@@ -549,7 +540,7 @@ class ArvoreE(pygame.sprite.Sprite):
         self.rect.y += self.speedy
 
         # Ajusta a posição e escala com base na perspectiva
-        if self.inicio_y <= self.rect.y <= self.fim_y + 15:
+        if self.inicio_y <= self.rect.y <= self.fim_y + 15: # Equação de escalonamento gerada por IA
             proporcao = (self.rect.y - self.inicio_y) / (self.fim_y - self.inicio_y)
             self.rect.centerx = self.inicio_x + (self.fim_x - self.inicio_x) * proporcao
             scale = self.escala_min + (self.escala_max - self.escala_min) * proporcao
@@ -582,8 +573,6 @@ class ArvoreD(pygame.sprite.Sprite):
     def __init__(self, assets):
         # Inicializa a classe base de sprite do Pygame
         pygame.sprite.Sprite.__init__(self)
-        # Define a camada das árvores (mesma camada de outros objetos)
-        self._layer = 1
         # Escolhe uma imagem aleatória para a árvore
         n = random.randint(0, 2)
         self.assets = assets
@@ -619,7 +608,7 @@ class ArvoreD(pygame.sprite.Sprite):
         self.rect.y += self.speedy
 
         # Ajusta a posição e escala com base na perspectiva
-        if self.inicio_y <= self.rect.y <= self.fim_y + 15:
+        if self.inicio_y <= self.rect.y <= self.fim_y + 15: # Equação de escalonamento gerada por IA
             proporcao = (self.rect.y - self.inicio_y) / (self.fim_y - self.inicio_y)
             self.rect.centerx = self.inicio_x + (self.fim_x - self.inicio_x) * proporcao
             scale = self.escala_min + (self.escala_max - self.escala_min) * proporcao
@@ -652,8 +641,6 @@ class Nuvem(pygame.sprite.Sprite):
     def __init__(self, assets):
         # Inicializa a classe base de sprite do Pygame
         pygame.sprite.Sprite.__init__(self)
-        # Define a camada das nuvens (mesma camada de outros objetos)
-        self._layer = 1
         # Escolhe uma imagem aleatória para a nuvem
         n = random.randint(0, 2)
         self.assets = assets
