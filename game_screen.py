@@ -367,13 +367,23 @@ def game_screen(window, cor):
             window.blit(grass, (0, HEIGHT/2))
         window.blit(pista, (75, HEIGHT/2))
 
-        # Desenha todos os sprites, exceto o jogador
+        # Desenha as faixas primeiro
+        for faixa in all_faixas:
+            window.blit(faixa.image, faixa.rect)
+
+        # Desenha os carros inimigos
+        for enemy in all_enemies:
+            window.blit(enemy.image, enemy.rect)
+
+        # Desenha os outros sprites (exceto jogador, faixas e inimigos)
         for sprite in all_sprites:
-            if sprite != player:
+            if sprite != player and sprite not in all_faixas and sprite not in all_enemies:
                 window.blit(sprite.image, sprite.rect)
+
         # Desenha o jogador com offset de trepidação, se aplicável
         if state == PLAYING:
             window.blit(player.image, (player.rect.x + player.shake_offset_x, player.rect.y + player.shake_offset_y))
+
         # Desenha os ícones de vidas
         for i in range(lives):
             window.blit(assets[vida2], (10 + i * 60, 10))

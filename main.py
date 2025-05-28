@@ -39,3 +39,4 @@ while state != QUIT:
 
 # Finaliza o Pygame ao sair do jogo
 pygame.quit()
+
