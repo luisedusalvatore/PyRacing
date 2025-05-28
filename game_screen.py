@@ -150,7 +150,7 @@ def game_screen(window, cor):
         for event in pygame.event.get():
             # Fecha o jogo ao clicar no botão de fechar
             if event.type == pygame.QUIT:
-                state = QUIT
+                return QUIT
             # Se o jogo está no estado PLAYING
             if state == PLAYING:
                 # Controle normal do carro
@@ -367,13 +367,19 @@ def game_screen(window, cor):
             window.blit(grass, (0, HEIGHT/2))
         window.blit(pista, (75, HEIGHT/2))
 
-        # Desenha todos os sprites, exceto o jogador
+        # Desenha as faixas primeiro (abaixo de todos)
+        for faixa in all_faixas:
+            window.blit(faixa.image, faixa.rect)
+        
+        # Desenha os outros sprites, exceto o jogador e as faixas
         for sprite in all_sprites:
-            if sprite != player:
+            if sprite != player and sprite not in all_faixas:
                 window.blit(sprite.image, sprite.rect)
+        
         # Desenha o jogador com offset de trepidação, se aplicável
         if state == PLAYING:
             window.blit(player.image, (player.rect.x + player.shake_offset_x, player.rect.y + player.shake_offset_y))
+        
         # Desenha os ícones de vidas
         for i in range(lives):
             window.blit(assets[vida2], (10 + i * 60, 10))
