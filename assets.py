@@ -18,6 +18,7 @@ ceu = 'ceu'
 nuvem = 'nuvem'
 pista = 'pista'
 musica = 'musica'
+musica_inicio = 'musica_inicio'
 explosao_som = 'explosao_som'
 fonte = 'fonte'
 fonte2 = 'fonte2'
@@ -92,10 +93,12 @@ def load_assets():
     ]
     assets[oleo] = pygame.transform.scale(pygame.image.load('files/img/oleo.png').convert_alpha(),(WIDTH_OLEO, HEIGHT_OLEO))
     
-      # Música de fundo
+      # Música dentro do jogo
     assets[musica] = pygame.mixer.music.load('files/music/musica.mp3') # Musica criada por Emmraan
     pygame.mixer.music.set_volume(0.4)
-    
+    # Música de inicio
+    assets[musica_inicio] = pygame.mixer.Sound('files/music/musica_inicio.mp3') # Musica criada por Spade_Stars
+    pygame.mixer.music.set_volume(0.4)
 
      # Efeitos sonoros
     assets[explosao_som] = pygame.mixer.Sound('files/music/explosao.wav') # Criado por Prof.Mudkip

@@ -42,7 +42,7 @@ def start(window):
     estado = 'initial'
     # Cor do carro (inicialmente None)
     cor = None
-
+    assets[musica_inicio].play(-1)  # Toca a música de fundo da tela inicial
     # Loop da tela inicial
     while running:
         # Controla a taxa de quadros por segundo
