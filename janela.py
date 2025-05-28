@@ -88,6 +88,7 @@ def start(window):
         pygame.display.flip()
 
     # Retorna o estado do jogo e a cor escolhida
+    assets[musica_inicio].stop()  # Para a música de fundo da tela inicial
     return GAME, cor
 
 def game_over(window):
