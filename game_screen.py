@@ -185,7 +185,7 @@ def game_screen(window, cor):
         if state == PLAYING:
             now = pygame.time.get_ticks()
             # Incrementa a pontuação a cada 20 segundos
-            if now - ultimo_incremento >= 20000:
+            if now - ultimo_incremento >= 10000:
                 score += 100
                 ultimo_incremento = now
 
