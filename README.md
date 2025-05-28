@@ -2,12 +2,6 @@
 
 Pyracing foi inspirado em jogos de corrida antigos, como por exemplo o ENDURO. O jogo é singleplayer, onde você controla um carro tentando desviar de obstáculos como carros, caminhões e poças de óleo afim de conquistar a maior pontuação.
 
-## Carros Jogáveis
-
-
-## Diversos Inimigos
-
-
 ### Como jogar
 
 Para começar a jogar, o jogador deve apertar qualquer tecla do teclado e, após isso, selecionar o carro que deseja jogar com base nas informações da tela. Com o veículo escolhido, o jogador será encamihado para a pista onde irá desviar dos obstáculos para sobreviver.
@@ -42,7 +36,9 @@ Para que o jogo funcione, é necessário importar todas as bibliotecas mencionad
 
 # Céditos
 
-*  Música criada por Emmraan
+* Música de início criada por Spade_Stars
+* Música durante o jogo criada por Emmraan
+* Música de fim criada por freesound_community
 * Som da explosão criado por 
 * Som do vida SomeGuy22 (Freesound)
 * Som do óleo criada por SoundDino
