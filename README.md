@@ -49,3 +49,13 @@ Para que o jogo funcione, é necessário importar todas as bibliotecas mencionad
 * Pista gerada por IA, aperfeicoado pelo estudante Luis com o programa GIMP
 * Foto do Dia gerada por IA e edidata pelo aluno Pedro
 * Equacao do sistema de escalonamento
+
+# Arquivo que comprava a participação dos participantes que se dedicaram a parte gráfica
+
+* (https://alinsperedu-my.sharepoint.com/personal/luisejpos_al_insper_edu_br/_layouts/15/onedrive.aspx?id=%2Fpersonal%2Fluisejpos%5Fal%5Finsper%5Fedu%5Fbr%2FDocuments%2FSemestre%201%2FDeSoft%2FArquivos%20Pyracing&ga=1)
+* gráficos feitos por Pedro e Enzo
+* áudios encontrados e selecionados por Pedro
+
+# Vídeo do jogo
+
+* (https://youtu.be/x2ZYEOtUIJE?si=tkGfP6dRyiH16WEk)
