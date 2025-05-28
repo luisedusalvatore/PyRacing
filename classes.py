@@ -25,7 +25,8 @@ class Piloto(pygame.sprite.Sprite):
     def __init__(self, groups, assets, cor):
         # Inicializa a classe base de sprite do Pygame
         pygame.sprite.Sprite.__init__(self)
-
+        # Define a camada do jogador (acima de todos)
+        self._layer = 3  # ALTERAÇÃO: Camada 3 para o jogador
         # Define a imagem do carro com base na cor escolhida
         self.image = assets['Carro_Piloto'][cor]
         # Cria uma máscara para colisões precisas
@@ -99,6 +100,8 @@ class Carro(pygame.sprite.Sprite):
     def __init__(self, assets):
         # Inicializa a classe base de sprite do Pygame
         pygame.sprite.Sprite.__init__(self)
+        # Define a camada dos carros inimigos (acima das faixas)
+        self._layer = 2  # ALTERAÇÃO: Camada 2 para carros inimigos
         # Escolhe uma imagem aleatória para o inimigo
         n = random.randint(0, 9)
         self.assets = assets
@@ -172,6 +175,8 @@ class Explosion(pygame.sprite.Sprite):
     def __init__(self, center, assets):
         # Inicializa a classe base de sprite do Pygame
         pygame.sprite.Sprite.__init__(self)
+        # Define a camada da explosão (mesma camada de outros objetos)
+        self._layer = 1  # ALTERAÇÃO: Camada 1 para explosões
         # Lista de imagens da animação de explosão
         self.explosao = assets[explosao]
         self.frame = 0
@@ -216,7 +221,8 @@ class Vida(pygame.sprite.Sprite):
     def __init__(self, assets):
         # Inicializa a classe base de sprite do Pygame
         pygame.sprite.Sprite.__init__(self)
-
+        # Define a camada das vidas (mesma camada de outros objetos)
+        self._layer = 1  # ALTERAÇÃO: Camada 1 para vidas
         self.assets = assets
         self.original_image = assets[vida]
         # Dimensões base do sprite
@@ -293,7 +299,8 @@ class Esquerda(pygame.sprite.Sprite):
     def __init__(self, assets):
         # Inicializa a classe base de sprite do Pygame
         pygame.sprite.Sprite.__init__(self)
-
+        # Define a camada das faixas (abaixo de todos)
+        self._layer = 0  # ALTERAÇÃO: Camada 0 para faixas
         self.assets = assets
         self.original_image = assets[esquerda]
         # Dimensões base do sprite
@@ -360,7 +367,8 @@ class Direita(pygame.sprite.Sprite):
     def __init__(self, assets):
         # Inicializa a classe base de sprite do Pygame
         pygame.sprite.Sprite.__init__(self)
-
+        # Define a camada das faixas (abaixo de todos)
+        self._layer = 0  # ALTERAÇÃO: Camada 0 para faixas
         self.assets = assets
         self.original_image = assets[direita]
         # Dimensões base do sprite
@@ -428,7 +436,8 @@ class Oleo(pygame.sprite.Sprite):
     def __init__(self, assets):
         # Inicializa a classe base de sprite do Pygame
         pygame.sprite.Sprite.__init__(self)
-
+        # Define a camada do óleo (mesma camada de outros objetos)
+        self._layer = 1  # ALTERAÇÃO: Camada 1 para óleo
         self.assets = assets
         self.original_image = assets[oleo]
         # Dimensões base do sprite
@@ -505,6 +514,8 @@ class ArvoreE(pygame.sprite.Sprite):
     def __init__(self, assets):
         # Inicializa a classe base de sprite do Pygame
         pygame.sprite.Sprite.__init__(self)
+        # Define a camada das árvores (mesma camada de outros objetos)
+        self._layer = 1  # ALTERAÇÃO: Camada 1 para árvores
         # Escolhe uma imagem aleatória para a árvore
         n = random.randint(0, 2)
         self.assets = assets
@@ -573,6 +584,8 @@ class ArvoreD(pygame.sprite.Sprite):
     def __init__(self, assets):
         # Inicializa a classe base de sprite do Pygame
         pygame.sprite.Sprite.__init__(self)
+        # Define a camada das árvores (mesma camada de outros objetos)
+        self._layer = 1  # ALTERAÇÃO: Camada 1 para árvores
         # Escolhe uma imagem aleatória para a árvore
         n = random.randint(0, 2)
         self.assets = assets
@@ -641,6 +654,8 @@ class Nuvem(pygame.sprite.Sprite):
     def __init__(self, assets):
         # Inicializa a classe base de sprite do Pygame
         pygame.sprite.Sprite.__init__(self)
+        # Define a camada das nuvens (mesma camada de outros objetos)
+        self._layer = 1  # ALTERAÇÃO: Camada 1 para nuvens
         # Escolhe uma imagem aleatória para a nuvem
         n = random.randint(0, 2)
         self.assets = assets

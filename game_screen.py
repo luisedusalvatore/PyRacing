@@ -27,7 +27,7 @@ def game_screen(window, cor):
     # Define a imagem da pista
     pista = assets[estrada]
     # Grupos de sprites para gerenciar objetos do jogo
-    all_sprites = pygame.sprite.Group()
+    all_sprites = pygame.sprite.LayeredUpdates()  # ALTERAÇÃO: Usa LayeredUpdates
     all_enemies = pygame.sprite.Group()
     all_vidas = pygame.sprite.Group()
     all_faixas = pygame.sprite.Group()
@@ -80,7 +80,7 @@ def game_screen(window, cor):
     last_vida_spawn = pygame.time.get_ticks()
     # Intervalo para spawn de vidas (ms)
     vida_spawn_interval = random.randint(10000, 30000)
-    # Intervalo para spawn de faixas (ms)
+    # Intervalo para spawn de faixas (Offers ms)
     faixa_spawn_interval = 250
     # Tempo do último spawn de faixa
     last_faixa_spawn = pygame.time.get_ticks()
@@ -367,20 +367,10 @@ def game_screen(window, cor):
             window.blit(grass, (0, HEIGHT/2))
         window.blit(pista, (75, HEIGHT/2))
 
-        # Desenha as faixas primeiro
-        for faixa in all_faixas:
-            window.blit(faixa.image, faixa.rect)
+        # Desenha todos os sprites, exceto o jogador, usando camadas
+        all_sprites.draw(window)
 
-        # Desenha os carros inimigos
-        for enemy in all_enemies:
-            window.blit(enemy.image, enemy.rect)
-
-        # Desenha os outros sprites (exceto jogador, faixas e inimigos)
-        for sprite in all_sprites:
-            if sprite != player and sprite not in all_faixas and sprite not in all_enemies:
-                window.blit(sprite.image, sprite.rect)
-
-        # Desenha o jogador com offset de trepidação, se aplicável
+        # Desenha o jogador manualmente para aplicar o offset de trepidação
         if state == PLAYING:
             window.blit(player.image, (player.rect.x + player.shake_offset_x, player.rect.y + player.shake_offset_y))
 
