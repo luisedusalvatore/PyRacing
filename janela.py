@@ -105,6 +105,8 @@ def game_over(window):
     # Define as fontes para os textos
     font = assets[fonte]
     font2 = assets[fonte2]
+    assets[musica_game_over].play()  # Toca a música de game over
+    # Cor vermelha para o texto de game over
     # Renderiza o texto "GAME OVER"
     game_over_text = font.render("GAME OVER", True, RED)
     # Renderiza a instrução para reiniciar
