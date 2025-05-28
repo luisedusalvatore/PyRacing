@@ -100,7 +100,7 @@ def load_assets():
     # Música de inicio
     assets[musica_inicio] = pygame.mixer.Sound('files/music/musica_inicio.mp3') # Musica criada por Spade_Stars
     # Musica de game over
-    assets[musica_game_over] = pygame.mixer.Sound('files/music/game_over_musica.mp3') # Musica criada por Spade_Stars
+    assets[musica_game_over] = pygame.mixer.Sound('files/music/game_over_musica.mp3') # Musica criada por freesound_community
      # Efeitos sonoros
     assets[explosao_som] = pygame.mixer.Sound('files/music/explosao.wav') # Criado por Prof.Mudkip
     assets[vida_som] = pygame.mixer.Sound('files/music/vida_up.mp3') # Criado por SomeGuy22 (Freesound)
